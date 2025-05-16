@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сделано в Хакасии | Официальный знак качества</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #2C5F8B;
+            --primary-light: #3A7CB9;
+            --secondary: #E74C3C;
+            --dark: #1A2C3D;
+            --light: #F8FAFC;
+            --gray: #E5E7EB;
+            --text: #333333;
+            --text-light: #6B7280;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--light);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header with 3 logos */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+        
+        header.scrolled {
+            padding: 0.5rem 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .header-logos {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .header-logo {
+            height: 3rem;
+            width: auto;
+            transition: all 0.3s ease;
+            object-fit: contain;
+        }
+        
+        .header-logo:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Different logo sizes */
+        .logo-main {
+            height: 3rem;
+        }
+        
+        .logo-partner {
+            height: 4rem;
+        }
+        
+        .logo-government {
+            height: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-cta {
+            background-color: var(--secondary);
+            color: white !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .nav-cta:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+        
+        .nav-cta::after {
+            display: none;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80vh;
+            height: 80vh;
+            background: radial-gradient(circle, rgba(44, 95, 139, 0.1) 0%, rgba(44, 95, 139, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 50rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .hero h1 span {
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            max-width: 40rem;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(44, 95, 139, 0.3);
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            max-width: 40rem;
+            z-index: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-10px); }
+            100% { transform: translateY(-50%) translateX(0); }
+        }
+        
+        /* Benefits section */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--text-light);
+            max-width: 50rem;
+            margin: 0 auto;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+            gap: 2rem;
+        }
+        
+        .benefit-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-light);
+        }
+        
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(44, 95, 139, 0.1) 0%, rgba(44, 95, 139, 0) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .benefit-card:hover::before {
+            opacity: 1;
+        }
+        
+        .benefit-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            background-color: var(--primary-light);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .benefit-card p {
+            color: var(--text-light);
+        }
+        
+        /* Requirements section */
+        .requirements {
+            background-color: white;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .requirement-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid var(--gray);
+        }
+
+        .requirement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-light);
+        }
+
+        .requirement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .requirement-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .requirement-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .requirements-btns {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* How it works */
+        .how-it-works {
+            background-color: var(--primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .how-it-works::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 80vh;
+            height: 80vh;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .how-it-works .section-title h2,
+        .how-it-works .section-title p {
+            color: white;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 0 1.5rem;
+            position: relative;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 3rem;
+            right: -2rem;
+            width: 4rem;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .step-number {
+            width: 6rem;
+            height: 6rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 2rem;
+            border: 2px solid white;
+        }
+        
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .step p {
+            opacity: 0.9;
+        }
+        
+        /* Application form */
+        .application {
+            background-color: white;
+        }
+        
+        .form-container {
+            max-width: 50rem;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            padding: 3rem;
+            border: 1px solid var(--gray);
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-title h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-title p {
+            color: var(--text-light);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--gray);
+            border-radius: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 95, 139, 0.2);
+        }
+        
+        textarea {
+            min-height: 8rem;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        /* FAQ section */
+        .faq {
+            background-color: var(--light);
+        }
+
+        .faq-container {
+            max-width: 60rem;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: 1px solid var(--gray);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-light);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .faq-question h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .faq-answer p {
+            padding-bottom: 1.5rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 20rem;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-logos {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-logo {
+            height: 2.5rem;
+            width: auto;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-logo:hover {
+            opacity: 1;
+        }
+        
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--secondary);
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        .animate-delay-1 {
+            animation-delay: 0.2s !important;
+        }
+        
+        .animate-delay-2 {
+            animation-delay: 0.4s !important;
+        }
+        
+        .animate-delay-3 {
+            animation-delay: 0.6s !important;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-image {
+                width: 45%;
+                opacity: 0.8;
+            }
+            
+            .steps {
+                flex-wrap: wrap;
+                gap: 3rem;
+            }
+            
+            .step {
+                flex: 0 0 calc(50% - 1.5rem);
+            }
+            
+            .step:not(:last-child)::after {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-logos {
+                gap: 1rem;
+            }
+            
+            .header-logo {
+                height: 2.5rem;
+            }
+            
+            .logo-main {
+                height: 3rem;
+            }
+            
+            .logo-partner {
+                height: 2.3rem;
+            }
+            
+            .logo-government {
+                height: 2.5rem;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 6rem 0 4rem;
+                text-align: center;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                display: none;
+            }
+            
+            .steps {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .step {
+                flex: 1;
+            }
+            
+            .form-container {
+                padding: 2rem;
+            }
+            
+            .footer-logos {
+                gap: 1rem;
+            }
+            
+            .footer-logo {
+                height: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .header-logos {
+                gap: 0.75rem;
+            }
+            
+            .header-logo {
+                height: 2rem;
+            }
+            
+            .logo-main {
+                height: 2.5rem;
+            }
+            
+            .logo-partner {
+                height: 1.8rem;
+            }
+            
+            .logo-government {
+                height: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .footer-logos {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-logos">
+                    <!-- Основной логотип ЦМБ -->
+                    <a href="#">
+                        <img src="Z:/Админ/Логотипы/Мой Бизнес Хакасия Векторный логотип.svg" alt="Сделано в Хакасии" class="header-logo logo-main">
+                    </a>
+                    
+                    <!-- Логотип фонд  -->
+                    <a href="#">
+                        <img src="Z:/Админ/Логотипы/logo_fond_razvitiya.png" alt="Правительство Хакасии" class="header-logo logo-government">
+                    </a>
+                    
+                    <!-- Логотип "Сделано в Хакасии" -->
+                    <a href="#">
+                        <img src="Z:/Админ/Логотипы/Сделано в Хакасии логотип.svg" alt="Партнер проекта" class="header-logo logo-partner">
+                    </a>
+                </div>
+                
+                <button class="mobile-menu-btn">☰</button>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#benefits">Преимущества</a></li>
+                        <li><a href="#how-it-works">Как получить</a></li>
+                        <li><a href="#requirements">Требования</a></li>
+                        <li><a href="#faq">Вопросы</a></li>
+                        <li><a href="#apply" class="nav-cta">Подать заявку</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content animate__animated animate__fadeInUp">
+                <h1><span>Официальный логотип</span> для продукции из Хакасии</h1>
+                <p>Подтвердите происхождение ваших товаров и получите конкурентное преимущество на рынке с официальным знаком качества "Сделано в Хакасии"</p>
+                
+                <div class="hero-btns">
+                    <a href="#apply" class="btn btn-primary animate__animated animate__fadeInUp animate__delay-1">Подать заявку</a>
+                    <a href="#how-it-works" class="btn btn-secondary animate__animated animate__fadeInUp animate__delay-2">Узнать больше</a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item animate__animated animate__fadeInUp animate__delay-3">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-text">компаний уже используют</div>
+                    </div>
+                    <div class="stat-item animate__animated animate__fadeInUp animate__delay-3">
+                        <div class="stat-number">24</div>
+                        <div class="stat-text">часа обработка заявки</div>
+                    </div>
+                </div>
+            </div>
+            
+            <img src="Z:/Админ/Логотипы/Сделано в Хакасии логотип.svg" alt="Продукция с логотипом Сделано в Хакасии" class="hero-image animate__animated animate__fadeInRight">
+        </div>
+    </section>
+    
+    <section class="section" id="benefits">
+        <div class="container">
+            <div class="section-title animate__animated animate__fadeInUp">
+                <h2>Почему стоит получить логотип?</h2>
+                <p>Использование официального знака "Сделано в Хакасии" дает вашей продукции значительные преимущества</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card animate__animated animate__fadeInUp animate__delay-1">
+                    <div class="benefit-icon">🏭</div>
+                    <h3>Поддержка местного производителя</h3>
+                    <p>Покажите свою причастность к развитию экономики Хакасии и получите поддержку региональных программ</p>
+                </div>
+                
+                <div class="benefit-card animate__animated animate__fadeInUp animate__delay-2">
+                    <div class="benefit-icon">📈</div>
+                    <h3>Рост продаж</h3>
+                    <p>Продукция с подтвержденным местным происхождением вызывает больше доверия у потребителей</p>
+                </div>
+                
+                <div class="benefit-card animate__animated animate__fadeInUp animate__delay-3">
+                    <div class="benefit-icon">🏆</div>
+                    <h3>Репутация качества</h3>
+                    <p>Ассоциация с природой и экологией Хакасии повышает воспринимаемое качество ваших товаров</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title animate__animated animate__fadeInUp">
+                <h2>Как получить логотип?</h2>
+                <p>Простая процедура оформления, которая займет минимум вашего времени</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step animate__animated animate__fadeInUp animate__delay-1">
+                    <div class="step-number">1</div>
+                    <h3>Подача заявки</h3>
+                    <p>Заполните онлайн-форму и приложите необходимые документы о происхождении продукции</p>
+                </div>
+                
+                <div class="step animate__animated animate__fadeInUp animate__delay-2">
+                    <div class="step-number">2</div>
+                    <h3>Проверка</h3>
+                    <p>Наши специалисты проверят соответствие вашей продукции требованиям программы</p>
+                </div>
+                
+                <div class="step animate__animated animate__fadeInUp animate__delay-3">
+                    <div class="step-number">3</div>
+                    <h3>Получение</h3>
+                    <p>После одобрения вы получите право использовать логотип на упаковке и в рекламе</p>
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="section requirements" id="requirements">
+        <div class="container">
+            <div class="section-title animate__animated animate__fadeInUp">
+                <h2>Требования к участникам</h2>
+                <p>Убедитесь, что ваша компания соответствует критериям для получения знака "Сделано в Хакасии"</p>
+            </div>
+            
+            <div class="requirements-grid animate__animated animate__fadeInUp">
+                <div class="requirement-card">
+                    <div class="requirement-icon">🏭</div>
+                    <h3>Местное производство</h3>
+                    <p>Не менее 70% производственного процесса должно осуществляться на территории Хакасии</p>
+                </div>
+                
+                <div class="requirement-card">
+                    <div class="requirement-icon">📝</div>
+                    <h3>Юридическая регистрация</h3>
+                    <p>Компания должна быть зарегистрирована на территории Республики Хакасия</p>
+                </div>
+                
+                <div class="requirement-card">
+                    <div class="requirement-icon">📊</div>
+                    <h3>Качество продукции</h3>
+                    <p>Продукция должна соответствовать всем стандартам качества и безопасности</p>
+                </div>
+                
+                <div class="requirement-card">
+                    <div class="requirement-icon">📦</div>
+                    <h3>Упаковка</h3>
+                    <p>Возможность размещения логотипа на упаковке продукции или в точках продаж</p>
+                </div>
+            </div>
+            
+            <div class="requirements-btns animate__animated animate__fadeInUp animate__delay-1">
+                <a href="#apply" class="btn btn-primary">Подать заявку</a>
+                <a href="#" class="btn btn-secondary">Скачать полный список требований (PDF)</a>
+            </div>
+        </div>
+    </section>
+    <section class="section faq" id="faq">
+        <div class="container">
+            <div class="section-title animate__animated animate__fadeInUp">
+                <h2>Частые вопросы</h2>
+                <p>Ответы на наиболее распространенные вопросы о знаке "Сделано в Хакасии"</p>
+            </div>
+            
+            <div class="faq-container animate__animated animate__fadeInUp">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Какие компании могут получить знак "Сделано в Хакасии"?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Знак могут получить юридические лица и индивидуальные предприниматели, зарегистрированные на территории Республики Хакасия, чья продукция соответствует критериям программы (не менее 70% производственного процесса осуществляется в Хакасии, соответствует стандартам качества и т.д.).</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Сколько стоит получение знака?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Получение права на использование знака "Сделано в Хакасии" абсолютно бесплатно для всех компаний, соответствующих требованиям программы. Это региональная инициатива по поддержке местных производителей.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Как долго длится проверка заявки?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Стандартный срок рассмотрения заявки - до 5 рабочих дней. В некоторых случаях, когда требуется дополнительная проверка документов или характеристик продукции, срок может быть увеличен до 10 рабочих дней.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>На какой срок выдается право использования знака?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Право использования знака выдается на 2 года с возможностью продления. Ежегодно проводится выборочная проверка компаний на соответствие требованиям программы.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Можно ли использовать знак для продукции, произведенной за пределами Хакасии?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Нет, использование знака для продукции, не соответствующей требованиям по месту производства (менее 70% производственного процесса в Хакасии), запрещено и может повлечь административную ответственность.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="section application" id="apply">
+        <div class="container">
+            <div class="section-title animate__animated animate__fadeInUp">
+                <h2>Подать заявку</h2>
+                <p>Заполните форму ниже, чтобы получить право использовать логотип "Сделано в Хакасии"</p>
+            </div>
+            
+            <div class="form-container animate__animated animate__fadeInUp">
+                <form id="application-form">
+                    <div class="form-group">
+                        <label for="company-name">Название компании/ИП</label>
+                        <input type="text" id="company-name" name="company-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-person">Контактное лицо</label>
+                        <input type="text" id="contact-person" name="contact-person" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-type">Тип продукции</label>
+                        <input type="text" id="product-type" name="product-type" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="production-place">Место производства</label>
+                        <input type="text" id="production-place" name="production-place" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-description">Описание продукции</label>
+                        <textarea id="product-description" name="product-description" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="certificates">Наличие сертификатов</label>
+                        <select id="certificates" name="certificates" required>
+                            <option value="">Выберите вариант</option>
+                            <option value="yes">Есть сертификаты качества</option>
+                            <option value="no">Нет сертификатов качества</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logos">
+                        <img src="Z:/Админ/Логотипы/Мой Бизнес Хакасия Векторный логотип.svg" alt="Центр Мой Бизнес" class="footer-logo">
+                        <img src="Z:/Админ/Логотипы/logo_fond_razvitiya.png" alt="Фонд Развития Хакасии" class="footer-logo">
+                    </div>
+                    <p>Официальный знак качества для продукции, произведенной в Республике Хакасия</p>
+                    <div class="social-links">
+                        <a href="https://ok.ru/group/64303052488939" class="social-link">OK</a>
+                        <a href="https://www.youtube.com/@moibiznes19" class="social-link">YT</a>
+                        <a href="https://vk.com/moibiznes19" class="social-link">VK</a>
+                        <a href="https://t.me/moibizness19" class="social-link">TG</a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="#benefits">Преимущества</a></li>
+                        <li><a href="#how-it-works">Как получить</a></li>
+                        <li><a href="#requirements">Требования</a></li>
+                        <li><a href="#faq">Частые вопросы</a></li>
+                        <li><a href="#apply">Подать заявку</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Контакты</h3>
+                    <p><strong>Фонд развития Республики Хакасия</strong></p>
+                    <p>📍 655010, Республика Хакасия, г. Абакан, пр-т. Дружбы Народов, д.2а, стр.1, помещение 4Н.</p>
+                    <p>📞  8-800-350-37-53</p>
+                    <p>✉️ fondrh@mail.ru</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Фонд развития Республики Хакасия". Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('show');
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (document.querySelector('nav').classList.contains('show')) {
+                        document.querySelector('nav').classList.remove('show');
+                    }
+                }
+            });
+        });
+        
+        // FAQ Accordion functionality - исправленная версия
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', (e) => {
+                // Проверяем, был ли клик именно по кнопке закрытия
+                const isToggleClick = e.target.classList.contains('faq-toggle') || 
+                                     e.target.parentElement.classList.contains('faq-toggle');
+                
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Если клик был по кнопке и элемент активен - закрываем
+                if (isToggleClick && isActive) {
+                    faqItem.classList.remove('active');
+                    return;
+                }
+                
+                // Закрываем все другие элементы
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Открываем текущий элемент, если он не был активен
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.animate__animated').forEach(element => {
+            const animation = element.classList.contains('animate__fadeInUp') ? 'fadeInUp' : 
+                             element.classList.contains('animate__fadeInRight') ? 'fadeInRight' : 'fadeIn';
+            
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: animation === 'fadeInUp' ? 50 : 0,
+                x: animation === 'fadeInRight' ? 50 : 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+        
+        // Form submission
+        document.getElementById('application-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would normally send the form data to the server
+            // For demo purposes, we'll just show an alert
+            alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
