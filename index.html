@@ -1382,24 +1382,34 @@
         });
     });
     
-    // FAQ Accordion functionality
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', (e) => {
-            const faqItem = question.parentElement;
-            const isActive = faqItem.classList.contains('active');
-            
-            // Close all other items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
+    // FAQ Accordion functionality - исправленная версия
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', (e) => {
+                // Проверяем, был ли клик именно по кнопке закрытия
+                const isToggleClick = e.target.classList.contains('faq-toggle') || 
+                                     e.target.parentElement.classList.contains('faq-toggle');
+                
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Если клик был по кнопке и элемент активен - закрываем
+                if (isToggleClick && isActive) {
+                    faqItem.classList.remove('active');
+                    return;
+                }
+                
+                // Закрываем все другие элементы
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Открываем текущий элемент, если он не был активен
+                if (!isActive) {
+                    faqItem.classList.add('active');
                 }
             });
-            
-            // Toggle current item
-            if (!isActive) {
-                faqItem.classList.add('active');
-            }
-        });
     });
 
     // GSAP animations
