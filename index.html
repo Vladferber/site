@@ -160,12 +160,13 @@
         }
         
         /* Hero section */
+        ./* Обновленные стили для героя с адаптивной подложкой */
         .hero {
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 7rem 0;
+            padding: 6rem 0;
             overflow: hidden;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
         }
@@ -180,76 +181,90 @@
 
         .hero-background {
             position: absolute;
-            top: 55%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: calc(100% - 4rem);
-            height: 80%;
+            height: auto;
+            min-height: 70%;
+            max-height: 90%;
             background: white;
             border-radius: 24px;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
             z-index: 0;
+            padding: 2rem 0;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 50rem;
-            padding: 3rem 0;
+            width: 100%;
+            padding: 2rem;
         }
 
         .hero-image {
-            position: absolute;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40%;
-            max-width: 500px;
-            z-index: 1;
-            animation: float 6s ease-in-out infinite;
+            display: none; /* Сначала скрываем для мобильных */
         }
 
-        /* Адаптация для мобильных */
-        @media (max-width: 1024px) {
+        /* Планшеты и небольшие ноутбуки */
+        @media (min-width: 768px) {
             .hero-background {
-                width: calc(100% - 3rem);
+                width: calc(100% - 4rem);
+                height: 70%;
+                min-height: 500px;
+            }
+            
+            .hero-content {
+                max-width: 50%;
+                padding: 3rem 0;
+            }
+        }
+
+        /* Десктопы */
+        @media (min-width: 1024px) {
+            .hero-background {
+                width: calc(100% - 6rem);
                 height: 75%;
             }
+            
             .hero-image {
-                width: 45%;
-                opacity: 0.9;
+                display: block;
+                position: absolute;
+                right: 4rem;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 40%;
+                max-width: 500px;
+                z-index: 1;
+                animation: float 6s ease-in-out infinite;
             }
         }
 
-        @media (max-width: 768px) {
-            .hero {
-                padding: 6rem 0;
-                text-align: center;
-            }
+        /* Мобильные устройства (альбомный режим) */
+        @media (max-width: 767px) and (orientation: landscape) {
             .hero-background {
+                min-height: 90%;
                 width: calc(100% - 2rem);
-                height: 80%;
-                border-radius: 20px;
-            }
-            .hero-content {
-                max-width: 100%;
-                padding: 2rem 0;
-            }
-            .hero-image {
-                display: none;
             }
         }
 
-        @media (max-width: 480px) {
+        /* Очень маленькие экраны */
+        @media (max-width: 360px) {
             .hero-background {
-                width: calc(100% - 1rem);
                 border-radius: 16px;
-                height: 85%;
-            }
-            .hero-content {
+                width: calc(100% - 1rem);
                 padding: 1.5rem 0;
             }
+            
+            .hero-content {
+                padding: 1rem;
+            }
         }
+
+        @keyframes float {
+            0% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-10px); }
+            100% { transform: translateY(-50%) translateX(0); }
 
         .hero {
             min-height: 100vh;
