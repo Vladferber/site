@@ -160,77 +160,142 @@
         }
         
         /* Hero section */
-        ./* Обновленные стили для героя с адаптивной подложкой */
+        ./* Hero Section */
         .hero {
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #e4e8eb 100%);
             overflow: hidden;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            padding: 1rem;
         }
-
+        
         .hero-container {
-            position: relative;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .hero-background {
-            position: absolute;
-            top: 55%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: calc(100% - 4rem);
-            height: auto;
-            min-height: 70%;
-            max-height: 90%;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.08);
-            z-index: 0;
-            padding: 2rem 0;
-        }
-
-        .hero-content {
             position: relative;
             z-index: 2;
-            width: 100%;
+        }
+        
+        .hero-content {
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
             padding: 2rem;
+            position: relative;
+            overflow: hidden;
         }
-
+        
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(44, 95, 139, 0.05) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: clamp(1.75rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        h1 span {
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            margin-bottom: 2rem;
+            color: #555;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            text-align: center;
+            flex: 1 1 auto;
+            min-width: 120px;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+        
+        .btn-secondary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
         .hero-image {
-            display: none; /* Сначала скрываем для мобильных */
+            display: none;
         }
 
-        /* Планшеты и небольшие ноутбуки */
+        /* Адаптация для планшетов */
         @media (min-width: 768px) {
-            .hero-background {
-                width: calc(100% - 4rem);
-                height: 70%;
-                min-height: 500px;
+            .hero {
+                padding: 2rem;
             }
             
             .hero-content {
-                max-width: 50%;
-                padding: 3rem 0;
+                padding: 3rem;
+                max-width: 65%;
+            }
+            
+            .hero-btns {
+                flex-wrap: nowrap;
+            }
+            
+            .btn {
+                flex: 0 1 auto;
             }
         }
 
-        /* Десктопы */
+        /* Адаптация для десктопов */
         @media (min-width: 1024px) {
-            .hero-background {
-                width: calc(100% - 6rem);
-                height: 75%;
+            .hero-content {
+                max-width: 50%;
+                padding: 4rem;
             }
             
             .hero-image {
                 display: block;
                 position: absolute;
-                right: 4rem;
+                right: 5%;
                 top: 50%;
                 transform: translateY(-50%);
                 width: 40%;
@@ -240,159 +305,35 @@
             }
         }
 
-        /* Мобильные устройства (альбомный режим) */
-        @media (max-width: 767px) and (orientation: landscape) {
-            .hero-background {
-                min-height: 100%;
-                width: calc(100% - 1rem);
+        /* Адаптация для больших экранов */
+        @media (min-width: 1440px) {
+            .hero-content {
+                max-width: 45%;
             }
         }
 
-        /* Очень маленькие экраны */
+        /* Анимация */
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%); }
+            50% { transform: translateY(-53%); }
+        }
+
+        /* Особые случаи */
         @media (max-width: 360px) {
-            .hero-background {
+            .hero-content {
+                padding: 1.5rem;
                 border-radius: 16px;
-                width: calc(100% - 1rem);
-                padding: 1.5rem 0;
             }
             
-            .hero-content {
-                padding: 1rem;
+            .stat-item {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
-
-        @keyframes float {
-            0% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(-10px); }
-            100% { transform: translateY(-50%) translateX(0); }
-}
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 8rem 0 4rem;
-            position: relative;
-            overflow: hidden;
-        }
         
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 80vh;
-            height: 80vh;
-            background: radial-gradient(circle, rgba(44, 95, 139, 0.1) 0%, rgba(44, 95, 139, 0) 70%);
-            border-radius: 50%;
-            z-index: 0;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 50rem;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-        
-        .hero h1 span {
-            color: var(--primary);
-        }
-        
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-light);
-            margin-bottom: 2.5rem;
-            max-width: 40rem;
-        }
-        
-        .hero-btns {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 2rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .btn-primary {
-            background-color: var(--secondary);
-            color: white;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
-        }
-        
-        .btn-primary:hover {
-            background-color: #c0392b;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--primary);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(44, 95, 139, 0.3);
-        }
-        
-        .hero-stats {
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .stat-text {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        .hero-image {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50%;
-            max-width: 40rem;
-            z-index: 0;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(-10px); }
-            100% { transform: translateY(-50%) translateX(0); }
-        }
+        @media (max-height: 600px) and (orientation: landscape) {
+            .hero {
+                min-height: 120vh;
         
         /* Benefits section */
         .section {
@@ -1147,30 +1088,29 @@
     </header>
     
     <section class="hero">
-        <div class="hero-background"></div>
         <div class="hero-container">
-            <div class="hero-content animate__animated animate__fadeInUp">
+            <div class="hero-content">
                 <h1><span>Официальный логотип</span> для продукции из Хакасии</h1>
                 <p>Подтвердите происхождение ваших товаров и получите конкурентное преимущество на рынке с официальным знаком качества "Сделано в Хакасии"</p>
                 
                 <div class="hero-btns">
-                    <a href="#apply" class="btn btn-primary animate__animated animate__fadeInUp animate__delay-1">Подать заявку</a>
-                    <a href="https://мойбизнес19.рф/assets/files/reestr-poluchatelej-logotipa-sdelano-v-hakasii-na-12.05.2025.pdf" class="btn btn-secondary animate__animated animate__fadeInUp animate__delay-2">Реестр получателей логотипа</a>
+                    <a href="#apply" class="btn btn-primary">Подать заявку</a>
+                    <a href="#" class="btn btn-secondary">Реестр получателей</a>
                 </div>
                 
                 <div class="hero-stats">
-                    <div class="stat-item animate__animated animate__fadeInUp animate__delay-3">
+                    <div class="stat-item">
                         <div class="stat-number">60+</div>
-                        <div class="stat-text">компаний уже используют</div>
+                        <div class="stat-text">компаний используют</div>
                     </div>
-                    <div class="stat-item animate__animated animate__fadeInUp animate__delay-3">
+                    <div class="stat-item">
                         <div class="stat-number">24</div>
-                        <div class="stat-text">часа обработка заявки</div>
+                        <div class="stat-text">часа обработка</div>
                     </div>
                 </div>
             </div>
       
-            <img src="img/Без имени-1 копия.svg" alt="логотип Сделано в Хакасии" class="hero-image animate__animated animate__fadeInRight">
+            <img src="img/logo.svg" alt="Логотип" class="hero-image">
         </div>
     </section>
     
