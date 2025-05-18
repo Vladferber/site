@@ -35,7 +35,74 @@
             overflow-x: hidden;
             background-color: var(--light);
         }
-        
+        @media (max-width: 768px) {
+  body {
+    font-size: 14px; /* Уменьшаем базовый шрифт */
+  }
+
+  .header, .main {
+    padding: 10px; /* Уменьшаем отступы */
+  }
+
+  /* Перестраиваем навигацию */
+  nav ul {
+    flex-direction: column;
+  }
+
+  /* Делаем изображения адаптивными */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+/* Базовые стили */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Адаптивные изображения */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Медиазапросы */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  /* Пример для навигации */
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Уменьшаем заголовки */
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Дополнительные правки для очень маленьких экранов */
+}
+    }
+        .projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}   
         .container {
             width: 100%;
             max-width: 1280px;
@@ -991,7 +1058,7 @@
                     </div>
                 </div>
             </div>
-            
+         <img src="image.jpg" loading="lazy" alt="Описание">   
             <img src="img/Без имени-1 копия.svg" alt="логотип Сделано в Хакасии" class="hero-image animate__animated animate__fadeInRight">
         </div>
     </section>
