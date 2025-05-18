@@ -35,14 +35,12 @@
             overflow-x: hidden;
             background-color: var(--light);
         }
-        
-        .container {
+  .container {
             width: 100%;
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 2rem;
         }
-        
         /* Header with 3 logos */
         header {
             position: fixed;
@@ -71,7 +69,7 @@
         .header-logos {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 2rem;
         }
         
         .header-logo {
@@ -156,7 +154,6 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--primary);
-            z-index: 1001;
         }
         
         /* Hero section */
@@ -287,7 +284,7 @@
             50% { transform: translateY(-50%) translateX(-10px); }
             100% { transform: translateY(-50%) translateX(0); }
         }
-        }
+        
         /* Benefits section */
         .section {
             padding: 6rem 0;
@@ -766,6 +763,233 @@
         
         /* Responsive */
         /* Мобильная адаптация */
+@media (max-width: 1024px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+    
+    .hero-image {
+        width: 45%;
+        opacity: 0.8;
+    }
+    
+    .steps {
+        flex-wrap: wrap;
+        gap: 3rem;
+    }
+    
+    .step {
+        flex: 0 0 calc(50% - 1.5rem);
+    }
+    
+    .step:not(:last-child)::after {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-logos {
+        gap: 1rem;
+    }
+    
+    .header-logo {
+        height: 2.5rem;
+    }
+    
+    .logo-main {
+        height: 3rem;
+    }
+    
+    .logo-partner {
+        height: 2.3rem;
+    }
+    
+    .logo-government {
+        height: 2.5rem;
+    }
+    
+    nav {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        padding: 1rem;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        transform: translateY(-150%);
+        transition: transform 0.3s ease;
+    }
+    
+    nav.show {
+        transform: translateY(0);
+    }
+    
+    nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-cta {
+        display: block;
+        text-align: center;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .hero {
+        padding: 6rem 0 4rem;
+        text-align: center;
+    }
+    
+    .hero-content {
+        max-width: 100%;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero-btns {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .hero-image {
+        display: none;
+    }
+    
+    .steps {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    
+    .step {
+        flex: 1;
+    }
+    
+    .form-container {
+        padding: 2rem;
+    }
+    
+    .footer-logos {
+        gap: 1rem;
+    }
+    
+    .footer-logo {
+        height: 2rem;
+    }
+    
+    /* Адаптация карточек преимуществ */
+    .benefits-grid, .requirements-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Уменьшаем отступы секций */
+    .section {
+        padding: 4rem 0;
+    }
+    
+    .section-title h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .header-logos {
+        gap: 0.5rem;
+    }
+    
+    .header-logo {
+        height: 2rem;
+    }
+    
+    .logo-main {
+        height: 2.5rem;
+    }
+    
+    .logo-partner {
+        height: 1.8rem;
+    }
+    
+    .logo-government {
+        height: 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
+    
+    .hero-btns {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .stat-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    
+    .section-title p {
+        font-size: 1rem;
+    }
+    
+    .step-number {
+        width: 4rem;
+        height: 4rem;
+        font-size: 1.5rem;
+    }
+    
+    .step h3 {
+        font-size: 1.3rem;
+    }
+    
+    .form-container {
+        padding: 1.5rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-logo {
+        height: 1.8rem;
+    }
+    
+    /* Адаптация формы */
+    input, textarea, select {
+        padding: 0.8rem;
+    }
+}
         @media (max-width: 1024px) {
             .hero h1 {
                 font-size: 3rem;
@@ -789,10 +1013,10 @@
                 display: none;
             }
         }
-
+        
         @media (max-width: 768px) {
             .header-logos {
-                gap: 0.5rem;
+                gap: 1rem;
             }
             
             .header-logo {
@@ -800,51 +1024,19 @@
             }
             
             .logo-main {
-                height: 2.5rem;
+                height: 3rem;
             }
             
             .logo-partner {
-                height: 2.5rem;
+                height: 2.3rem;
             }
             
             .logo-government {
-                height: 2rem;
+                height: 2.5rem;
             }
             
             nav {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background-color: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(5px);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                transform: translateY(-100%);
-                transition: transform 0.3s ease;
-                z-index: 1000;
-                padding-top: 5rem;
-            }
-            
-            nav.show {
-                transform: translateY(0);
-            }
-            
-            nav ul {
-                flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
-                width: 100%;
-                padding: 0 2rem;
-            }
-            
-            nav a {
-                font-size: 1.2rem;
-                display: block;
-                padding: 0.5rem 0;
+                display: none;
             }
             
             .mobile-menu-btn {
@@ -871,12 +1063,10 @@
             
             .hero-btns {
                 justify-content: center;
-                flex-wrap: wrap;
             }
             
             .hero-stats {
                 justify-content: center;
-                flex-wrap: wrap;
             }
             
             .hero-image {
@@ -903,29 +1093,15 @@
             .footer-logo {
                 height: 2rem;
             }
-            
-            /* Адаптация карточек преимуществ */
-            .benefits-grid, .requirements-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            /* Уменьшаем отступы секций */
-            .section {
-                padding: 4rem 0;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
         }
-
+        
         @media (max-width: 480px) {
             .container {
-                padding: 0 1rem;
+                padding: 0 1.5rem;
             }
             
             .header-logos {
-                gap: 0.5rem;
+                gap: 0.75rem;
             }
             
             .header-logo {
@@ -933,20 +1109,19 @@
             }
             
             .logo-main {
-                height: 2rem;
+                height: 2.5rem;
             }
             
             .logo-partner {
-                height: 2rem;
+                height: 1.8rem;
             }
             
             .logo-government {
-                height: 1.5rem;
+                height: 2rem;
             }
             
             .hero h1 {
                 font-size: 2rem;
-                line-height: 1.3;
             }
             
             .hero p {
@@ -962,45 +1137,24 @@
                 width: 100%;
             }
             
-            .stat-item {
-                flex-direction: column;
-                text-align: center;
+            .section {
+                padding: 4rem 0;
             }
             
             .section-title h2 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
-            .section-title p {
-                font-size: 1rem;
-            }
-            
-            .step-number {
-                width: 4rem;
-                height: 4rem;
-                font-size: 1.5rem;
-            }
-            
-            .step h3 {
-                font-size: 1.3rem;
+            .benefits-grid {
+                grid-template-columns: 1fr;
             }
             
             .form-container {
                 padding: 1.5rem;
             }
             
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .footer-logo {
-                height: 1.8rem;
-            }
-            
-            /* Адаптация формы */
-            input, textarea, select {
-                padding: 0.8rem;
+            .footer-logos {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -1021,13 +1175,13 @@
                     </a>
                     
                     <!-- Логотип "Сделано в Хакасии" -->
-                    <a href="https://vladferber.github.io">
+                    <a href="#">
                         <img src="img/Без имени-1 копия.svg" alt="Лого Сделано в Хакасии" class="header-logo logo-partner">
                     </a>
                 </div>
                 
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>    
-                <nav id="mainNav">
+                <button class="mobile-menu-btn">☰</button>    
+                <nav>
                     <ul>
                         <li><a href="#benefits">Преимущества</a></li>
                         <li><a href="#how-it-works">Как получить</a></li>
@@ -1041,8 +1195,7 @@
     </header>
     
     <section class="hero">
-        <div class="hero-background"></div>
-        <div class="hero-container">
+        <div class="container">
             <div class="hero-content animate__animated animate__fadeInUp">
                 <h1><span>Официальный логотип</span> для продукции из Хакасии</h1>
                 <p>Подтвердите происхождение ваших товаров и получите конкурентное преимущество на рынке с официальным знаком качества "Сделано в Хакасии"</p>
@@ -1178,9 +1331,10 @@
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Знак могут получить юридические лица и индивидуальные предприниматели, зарегистрированные на территории Республики Хакасия, чья продукция соответствует критериям программы.</p>
+                        <p>Знак могут получить юридические лица и индивидуальные предприниматели, зарегистрированные на территории Республики Хакасия, чья продукция соответствует критериям программы (не менее 70% производственного процесса осуществляется в Хакасии, соответствует стандартам качества и т.д.).</p>
                     </div>
-                </div>          
+                </div>
+                
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>Сколько стоит получение знака?</h3>
@@ -1325,63 +1479,67 @@
         </div>
     </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-<script>
-    // Mobile menu functionality
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script>
+        // Improved mobile menu toggle
+document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+    const nav = document.querySelector('nav');
+    nav.classList.toggle('show');
     
-    mobileMenuBtn.addEventListener('click', function() {
-        mainNav.classList.toggle('show');
-        this.textContent = mainNav.classList.contains('show') ? '✕' : '☰';
-    });
-    
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (mainNav.classList.contains('show')) {
-                mainNav.classList.remove('show');
-                mobileMenuBtn.textContent = '☰';
-            }
-        });
-    });
-    
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
-        const header = document.getElementById('header');
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
+    // Toggle icon between ☰ and ✕
+    this.textContent = nav.classList.contains('show') ? '✕' : '☰';
+});
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => {
+        const nav = document.querySelector('nav');
+        if (nav.classList.contains('show')) {
+            nav.classList.remove('show');
+            document.querySelector('.mobile-menu-btn').textContent = '☰';
         }
     });
-    
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu if open
-                if (mainNav.classList.contains('show')) {
-                    mainNav.classList.remove('show');
-                    mobileMenuBtn.textContent = '☰';
-                }
+});
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('show');
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
             }
         });
-    });
-    
-// FAQ Accordion functionality - исправленная версия
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (document.querySelector('nav').classList.contains('show')) {
+                        document.querySelector('nav').classList.remove('show');
+                    }
+                }
+            });
+        });
+        
+        // FAQ Accordion functionality - исправленная версия
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', (e) => {
                 // Проверяем, был ли клик именно по кнопке закрытия
@@ -1410,37 +1568,38 @@
                 }
             });
         });
-    // GSAP animations
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Animate elements on scroll
-    gsap.utils.toArray('.animate__animated').forEach(element => {
-        const animation = element.classList.contains('animate__fadeInUp') ? 'fadeInUp' : 
-                         element.classList.contains('animate__fadeInRight') ? 'fadeInRight' : 'fadeIn';
+
+        // GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
         
-        gsap.from(element, {
-            scrollTrigger: {
-                trigger: element,
-                start: 'top 80%',
-                toggleActions: 'play none none none'
-            },
-            opacity: 0,
-            y: animation === 'fadeInUp' ? 50 : 0,
-            x: animation === 'fadeInRight' ? 50 : 0,
-            duration: 1,
-            ease: 'power3.out'
+        // Animate elements on scroll
+        gsap.utils.toArray('.animate__animated').forEach(element => {
+            const animation = element.classList.contains('animate__fadeInUp') ? 'fadeInUp' : 
+                             element.classList.contains('animate__fadeInRight') ? 'fadeInRight' : 'fadeIn';
+            
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: animation === 'fadeInUp' ? 50 : 0,
+                x: animation === 'fadeInRight' ? 50 : 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
         });
-    });
-    
-    // Form submission
-    document.getElementById('application-form').addEventListener('submit', function(e) {
-        e.preventDefault();
         
-        // Here you would normally send the form data to the server
-        // For demo purposes, we'll just show an alert
-        alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
-        this.reset();
-    });
-</script>
+        // Form submission
+        document.getElementById('application-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would normally send the form data to the server
+            // For demo purposes, we'll just show an alert
+            alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+            this.reset();
+        });
+    </script>
 </body>
 </html>
