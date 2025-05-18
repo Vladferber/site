@@ -1380,25 +1380,6 @@
         });
     });
     
-    // FAQ Accordion functionality
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', (e) => {
-            const faqItem = question.parentElement;
-            const isActive = faqItem.classList.contains('active');
-            
-            // Close all other items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
-                }
-            });
-            
-            // Toggle current item
-            if (!isActive) {
-                faqItem.classList.add('active');
-            }
-        });
-    });
 // FAQ Accordion functionality - исправленная версия
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', (e) => {
