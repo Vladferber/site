@@ -161,7 +161,7 @@
         
         /* Hero section */
     .hero {
-        min-height: 70vh;
+        min-height: 100vh;
         display: flex;
         align-items: center;
         padding: 4rem 2rem;
@@ -1472,7 +1472,12 @@
             </div>
         </div>
     </footer>
-
+// Корректировка высоты на мобильных
+function fixHeight() {
+    document.querySelector('.hero').style.height = window.innerHeight + 'px';
+}
+window.addEventListener('resize', fixHeight);
+window.addEventListener('DOMContentLoaded', fixHeight);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 <script>
