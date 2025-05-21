@@ -450,6 +450,65 @@
             height: 2.5rem;
         }
     }
+/* Адаптация для 24-27" мониторов (1920px+) */
+@media (min-width: 1921px) {
+    .hero {
+        min-height: 65vh;
+        padding: 5rem 8%;
+        margin: 150px 8% 3rem;
+        border-radius: 2.5rem;
+    }
+
+    .hero::before {
+        width: 90vh;
+        height: 90vh;
+        right: -15%;
+    }
+
+    .hero-content {
+        max-width: 60rem;
+    }
+
+    .hero h1 {
+        font-size: clamp(3rem, 4vw, 4rem);
+        margin-bottom: 2rem;
+    }
+
+    .hero p {
+        font-size: 1.35rem;
+        max-width: 45rem;
+    }
+
+    .hero-btns {
+        gap: 1.25rem;
+    }
+
+    .btn {
+        padding: 1rem 2.25rem;
+        font-size: 1.1rem;
+    }
+
+    .hero-stats {
+        gap: 2rem;
+    }
+
+    .stat-number {
+        font-size: 2.25rem;
+    }
+
+    .stat-text {
+        font-size: 1.05rem;
+    }
+
+    .hero-image {
+        right: 5%;
+        max-width: 45rem;
+    }
+
+    @keyframes float {
+        50% { transform: translateY(-50%) translateX(-12px); }
+    }
+}
 
     /* Адаптация для больших экранов */
     @media (min-width: 1600px) {
