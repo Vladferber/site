@@ -385,13 +385,15 @@
     /* Адаптация для мобильных устройств */
     @media (max-width: 768px) {
         .hero {
-            padding: 8rem 1.5rem 4rem;
+            padding: 3rem 1rem;
+            margin: 100px 1rem 1rem;
+            border-radius: 1.2rem;
             text-align: center;
+            flex-direction: column;
         }
         
         .hero-content {
             text-align: center;
-            margin: 0 auto;
         }
         
         .hero p {
@@ -413,16 +415,11 @@
             top: auto;
             transform: none;
             width: 70%;
-            max-height: none;
             margin: 2rem auto 0;
             animation: none;
         }
-        
-        .bg-circle-1 {
-            top: -50%;
-            right: -50%;
-        }
     }
+
 
     @media (max-width: 480px) {
         .hero {
