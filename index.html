@@ -172,6 +172,7 @@
         border-radius: 2rem;
         margin: 130px 2rem 2rem;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+       
     }
 
     .hero::before {
@@ -183,12 +184,12 @@
         height: 80vh;
         background: radial-gradient(circle, rgba(44, 95, 139, 0.05) 0%, rgba(44, 95, 139, 0) 70%);
         border-radius: 50%;
-        z-index: 0;
+        z-index: -1;
     }
 
     .hero-content {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         max-width: 50rem;
         width: 100%;
     }
@@ -219,8 +220,7 @@
         gap: 1rem;
         margin-bottom: 2rem;
     }
-
-    .btn {
+.btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -263,8 +263,7 @@
         flex-wrap: wrap;
         gap: 1.5rem;
     }
-
-    .stat-item {
+.stat-item {
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -288,8 +287,76 @@
         transform: translateY(-50%);
         width: 50%;
         max-width: 40rem;
-        z-index: 0;
+        max-height: 80vh;
+        object-fit: contain;
+        z-index: 1;
         animation: float 6s ease-in-out infinite;
+    }
+
+    /* Элементы фона */
+    .hero-bg-elements {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        overflow: hidden;
+    }
+
+    .bg-circle-1 {
+        position: absolute;
+        top: -30%;
+        right: -20%;
+        width: 80vh;
+        height: 80vh;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(44, 95, 139, 0.05) 0%, rgba(44, 95, 139, 0) 70%);
+    }
+
+    .bg-circle-2 {
+        position: absolute;
+        bottom: -30%;
+        left: -15%;
+        width: 60vh;
+        height: 60vh;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(231, 76, 60, 0.05) 0%, rgba(231, 76, 60, 0) 70%);
+    }
+
+    /* Кнопка скролла вниз */
+    .scroll-down-btn {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+        z-index: 3;
+        animation: bounce 4s infinite;
+        transition: all 0.3s;
+    }
+
+    .scroll-down-btn:hover {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .scroll-down-btn svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+        40% {transform: translateY(-20px) translateX(-50%);}
+        60% {transform: translateY(-10px) translateX(-50%);}
     }
 
     @keyframes float {
@@ -301,29 +368,30 @@
     /* Адаптация для планшетов */
     @media (max-width: 1024px) {
         .hero {
-            padding: 4rem 1.5rem;
-            margin: 100px 1.5rem 1.5rem;
-            border-radius: 1.5rem;
+            padding: 6rem 2rem;
         }
         
         .hero-image {
             width: 45%;
             opacity: 0.9;
         }
+        
+        .bg-circle-1 {
+            top: -40%;
+            right: -30%;
+        }
     }
 
     /* Адаптация для мобильных устройств */
     @media (max-width: 768px) {
         .hero {
-            padding: 3rem 1rem;
-            margin: 100px 1rem 1rem;
-            border-radius: 1.2rem;
+            padding: 8rem 1.5rem 4rem;
             text-align: center;
-            flex-direction: column;
         }
         
         .hero-content {
             text-align: center;
+            margin: 0 auto;
         }
         
         .hero p {
@@ -345,17 +413,20 @@
             top: auto;
             transform: none;
             width: 70%;
+            max-height: none;
             margin: 2rem auto 0;
             animation: none;
+        }
+        
+        .bg-circle-1 {
+            top: -50%;
+            right: -50%;
         }
     }
 
     @media (max-width: 480px) {
         .hero {
-            padding: 2rem 0.5rem;
-            margin: 90px 0.5rem 0.5rem;
-            border-radius: 1rem;
-            min-height: 90vh;
+            padding: 7rem 1rem 3rem;
         }
         
         .hero-btns {
@@ -375,66 +446,24 @@
         .hero-image {
             width: 90%;
         }
-    }
-/* Адаптация для 24-27" мониторов (1920px+) */
-@media (min-width: 1921px) {
-    .hero {
-        min-height: 65vh;
-        padding: 5rem 8%;
-        margin: 150px 8% 3rem;
-        border-radius: 2.5rem;
+        
+        .scroll-down-btn {
+            bottom: 1rem;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
     }
 
-    .hero::before {
-        width: 90vh;
-        height: 90vh;
-        right: -15%;
+    /* Адаптация для больших экранов */
+    @media (min-width: 1600px) {
+        .hero {
+            min-height: 900px;
+        }
+        
+        .hero-image {
+            max-width: 50rem;
+        }
     }
-
-    .hero-content {
-        max-width: 60rem;
-    }
-
-    .hero h1 {
-        font-size: clamp(3rem, 4vw, 4rem);
-        margin-bottom: 2rem;
-    }
-
-    .hero p {
-        font-size: 1.35rem;
-        max-width: 45rem;
-    }
-
-    .hero-btns {
-        gap: 1.25rem;
-    }
-
-    .btn {
-        padding: 1rem 2.25rem;
-        font-size: 1.1rem;
-    }
-
-    .hero-stats {
-        gap: 2rem;
-    }
-
-    .stat-number {
-        font-size: 2.25rem;
-    }
-
-    .stat-text {
-        font-size: 1.05rem;
-    }
-
-    .hero-image {
-        right: 5%;
-        max-width: 45rem;
-    }
-
-    @keyframes float {
-        50% { transform: translateY(-50%) translateX(-12px); }
-    }
-}
         
         /* Benefits section */
         .section {
@@ -1188,32 +1217,45 @@
         </div>
     </header>
     
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content animate__animated animate__fadeInUp">
-                <h1><span>Официальный логотип</span> для продукции из Хакасии</h1>
-                <p>Подтвердите происхождение ваших товаров и получите конкурентное преимущество на рынке с официальным знаком качества "Сделано в Хакасии"</p>
-                
-                <div class="hero-btns">
-                    <a href="#apply" class="btn btn-primary animate__animated animate__fadeInUp animate__delay-1">Подать заявку</a>
-                    <a href="https://мойбизнес19.рф/assets/files/reestr-poluchatelej-logotipa-sdelano-v-hakasii-na-12.05.2025.pdf" class="btn btn-secondary animate__animated animate__fadeInUp animate__delay-2">Реестр получателей логотипа</a>
+    <section class="hero" id="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1><span>Официальный логотип</span> для продукции из Хакасии</h1>
+            <p>Подтвердите происхождение ваших товаров и получите конкурентное преимущество на рынке с официальным знаком качества "Сделано в Хакасии"</p>
+            
+            <div class="hero-btns">
+                <a href="#apply" class="btn btn-primary">Подать заявку</a>
+                <a href="https://мойбизнес19.рф/assets/files/reestr-poluchatelej-logotipa-sdelano-v-hakasii-na-12.05.2025.pdf" class="btn btn-secondary">Реестр получателей</a>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">60+</div>
+                    <div class="stat-text">компаний уже используют</div>
                 </div>
-                
-                <div class="hero-stats">
-                    <div class="stat-item animate__animated animate__fadeInUp animate__delay-3">
-                        <div class="stat-number">60+</div>
-                        <div class="stat-text">компаний уже используют</div>
-                    </div>
-                    <div class="stat-item animate__animated animate__fadeInUp animate__delay-3">
-                        <div class="stat-number">24</div>
-                        <div class="stat-text">часа обработка заявки</div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number">24</div>
+                    <div class="stat-text">часа обработка заявки</div>
                 </div>
             </div>
-      
-            <img src="img/Без имени-1 копия.svg" alt="логотип Сделано в Хакасии" class="hero-image animate__animated animate__fadeInRight">
         </div>
-    </section>
+  
+        <img src="img/Без имени-1 копия.svg" alt="Логотип Сделано в Хакасии" class="hero-image">
+    </div>
+    
+    <!-- Элемент для анимированного фона -->
+    <div class="hero-bg-elements">
+        <div class="bg-circle-1"></div>
+        <div class="bg-circle-2"></div>
+    </div>
+    
+    <!-- Кнопка для скролла вниз -->
+    <a href="#benefits" class="scroll-down-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</section>
     
     <section class="section" id="benefits">
         <div class="container">
@@ -1590,6 +1632,61 @@
         // For demo purposes, we'll just show an alert
         alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
         this.reset();
+    });
+</script>
+<script>
+    // Плавный скролл при клике на кнопку
+    document.querySelector('.scroll-down-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+    
+    // Анимация появления элементов при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        gsap.from('.hero-content h1', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-content p', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            delay: 0.2,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-btns', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            delay: 0.4,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-stats', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            delay: 0.6,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-image', {
+            duration: 1.5,
+            x: 100,
+            opacity: 0,
+            delay: 0.3,
+            ease: 'power3.out'
+        });
     });
 </script>
 </body>
