@@ -504,23 +504,22 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
             gap: 2rem;
+            margin-bottom: 2rem;
         }
         
         .benefit-card {
             background-color: white;
             border-radius: 1rem;
             padding: 1rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
+            text-align: center;
             border: 1px solid var(--gray);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
         }
         
         .benefit-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border-color: var(--primary-light);
         }
         
@@ -542,28 +541,23 @@
         }
         
         .benefit-icon {
-            width: 3.5rem;
-            height: 3.5rem;
-            background-color: var(--primary-light);
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            color: white;
-            font-size: 1.5rem;
+            color: var(--primary);
         }
         
         .benefit-card h3 {
             font-size: 1.25rem;
-            font-weight: 600;
             margin-bottom: 1rem;
             color: var(--dark);
         }
+
         
         .benefit-card p {
             color: var(--text-light);
+            font-size: 0.95rem;
         }
+
         
         /* Requirements section */
         .requirements {
@@ -1045,7 +1039,7 @@
     }
     
    #application-form-section .btn-next:hover, .btn-submit:hover {
-        background-color: #c0392b;
+        background-color: var(--primary-light);
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(44, 95, 139, 0.2);
     }
@@ -1176,7 +1170,7 @@
         .faq-toggle {
             font-size: 1.5rem;
             font-weight: 300;
-            color: var(--secondary);
+            color: var(--primary);
             transition: transform 0.3s;
         }
 
@@ -1651,23 +1645,25 @@
             </div>
             
             <div class="benefits-grid">
-                <div class="benefit-card animate__animated animate__fadeInUp animate__delay-1">
-                    <div class="benefit-icon">🏭</div>
-                    <h3>Поддержка местного производителя</h3>
+                <div class="requirements-grid animate__animated animate__fadeInUp">
+                <div class="requirement-card">
+                    <div class="requirement-icon">🤝</div>
+                    <h3>Поддержка</h3>
                     <p>Покажите свою причастность к развитию экономики Хакасии и получите поддержку региональных программ</p>
                 </div>
-                
-                <div class="benefit-card animate__animated animate__fadeInUp animate__delay-2">
-                    <div class="benefit-icon">📈</div>
+
+                <div class="requirement-card">
+                    <div class="requirement-icon">📈</div>
                     <h3>Рост продаж</h3>
                     <p>Продукция с подтвержденным местным происхождением вызывает больше доверия у потребителей</p>
                 </div>
                 
-                <div class="benefit-card animate__animated animate__fadeInUp animate__delay-3">
-                    <div class="benefit-icon">🏆</div>
+                <div class="requirement-card">
+                    <div class="requirement-icon">✅</div>
                     <h3>Репутация качества</h3>
                     <p>Ассоциация с природой и экологией Хакасии повышает воспринимаемое качество ваших товаров</p>
                 </div>
+                                
             </div>
         </div>
     </section>
