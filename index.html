@@ -690,85 +690,450 @@
         }
         
         /* Application form */
-        .application {
+ .application {
             background-color: white;
         }
-        
-        .form-container {
-            max-width: 50rem;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 1rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            padding: 3rem;
-            border: 1px solid var(--gray);
+        /* Form Styles */
+    #application-form-section .form-wrapper {
+        background-color: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    #application-form-section .form-progress {
+        padding: 1.5rem 2rem 0;
+        background-color: ##ffffff;
+    }
+    
+    #application-form-section .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+    
+    #application-form-section .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        flex: 1;
+        opacity: 0.5;
+        transition: all 0.3s ease;
+    }
+    
+    #application-form-section .step.active {
+        opacity: 1;
+    }
+    
+    #application-form-section .step.active .step-number {
+        background-color: var(--primary);
+        color: white;
+    }
+    
+    #application-form-section .step.completed .step-number {
+        background-color: #10b981;
+        color: white;
+    }
+    
+    #application-form-section .step-number {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background-color: #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
+    }
+     
+    #application-form-section .step-text {
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-align: center;
+        color: var(--text-light);
+    }
+    
+    #application-form-section .progress-bar {
+        height: 6px;
+        background-color: #e5e7eb;
+        border-radius: 3px;
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+    }
+    
+    #application-form-section .progress-fill {
+        height: 100%;
+        background-color: var(--primary);
+        transition: width 0.5s ease;
+    }
+    
+    .form-step {
+        padding: 2rem;
+        display: none;
+    }
+    
+    .form-step.active {
+        display: block;
+    }
+    
+    .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .form-header h3 {
+        font-size: 1.5rem;
+        color: var(--dark);
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-header p {
+        color: var(--text-light);
+    }
+    
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .form-group {
+        position: relative;
+    }
+    
+    .form-group.full-width {
+        grid-column: span 2;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--dark);
+        font-size: 0.95rem;
+    }
+    
+    input, select, textarea {
+        width: 100%;
+        padding: 0.875rem 1rem 0.875rem 2.75rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.75rem;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: #f9fafb;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--primary-light);
+        box-shadow: 0 0 0 3px rgba(44, 95, 139, 0.1);
+        background-color: white;
+    }
+    
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-light);
+        pointer-events: none;
+    }
+    
+    select {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1rem;
+    }
+    
+    .textarea-counter {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        font-size: 0.8rem;
+        color: var(--text-light);
+    }
+    
+    .range-slider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    input[type="range"] {
+        flex: 1;
+        padding: 0;
+        -webkit-appearance: none;
+        height: 6px;
+        background: #e5e7eb;
+        border-radius: 3px;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--primary);
+        cursor: pointer;
+    }
+    
+    .range-value {
+        font-weight: 600;
+        color: var(--primary);
+        min-width: 3rem;
+        text-align: center;
+    }
+    
+    .range-hint {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 0.5rem;
+    }
+    
+    .file-upload {
+        position: relative;
+    }
+    
+    .file-upload input[type="file"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+    
+    .upload-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        border: 2px dashed #e5e7eb;
+        border-radius: 0.75rem;
+        background-color: #f9fafb;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .upload-area:hover {
+        border-color: var(--primary-light);
+        background-color: rgba(44, 95, 139, 0.03);
+    }
+    
+    .upload-area svg {
+        margin-bottom: 1rem;
+        color: var(--primary-light);
+    }
+    
+    .upload-area span {
+        font-size: 0.95rem;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+    }
+    
+    .file-hint {
+        font-size: 0.8rem;
+        color: var(--text-light);
+    }
+    
+    .file-preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    
+    .file-item {
+        display: flex;
+        align-items: center;
+        background-color: #f3f4f6;
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    .file-item svg {
+        margin-right: 0.5rem;
+        color: var(--primary);
+    }
+    
+    .file-item button {
+        margin-left: 0.5rem;
+        background: none;
+        border: none;
+        color: var(--text-light);
+        cursor: pointer;
+    }
+    
+    .checkbox-group {
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .checkbox-group input {
+        width: auto;
+        margin-right: 0.75rem;
+        margin-top: 0.25rem;
+    }
+    
+    .checkbox-group label {
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+    
+    .checkbox-group a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+    
+    .checkbox-group a:hover {
+        text-decoration: underline;
+    }
+    
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+        margin-top: 1rem;
+    }
+    
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.875rem 1.75rem;
+        border-radius: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-size: 0.95rem;
+        border: none;
+    }
+    
+    .btn-prev {
+        background-color: #f3f4f6;
+        color: var(--text);
+    }
+    
+    .btn-prev:hover {
+        background-color: #e5e7eb;
+    }
+    
+    .btn-next, .btn-submit {
+        background-color: var(--primary);
+        color: white;
+    }
+    
+    .btn-next:hover, .btn-submit:hover {
+        background-color: var(--primary-light);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(44, 95, 139, 0.2);
+    }
+    
+    .btn-submit {
+        padding: 0.875rem 2.5rem;
+    }
+    
+    .form-success {
+        text-align: center;
+        padding: 3rem 2rem;
+    }
+    
+    .success-icon {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        background-color: rgba(16, 185, 129, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+    }
+    
+    .success-icon svg {
+        color: #10b981;
+    }
+    
+    .form-success h3 {
+        font-size: 1.75rem;
+        color: var(--dark);
+        margin-bottom: 1rem;
+    }
+    
+    .form-success p {
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        max-width: 30rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .btn-success {
+        background-color: var(--primary);
+        color: white;
+    }
+    
+    .btn-success:hover {
+        background-color: var(--primary-light);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
         }
         
-        .form-title {
-            text-align: center;
-            margin-bottom: 2rem;
+        .form-group.full-width {
+            grid-column: span 1;
         }
         
-        .form-title h2 {
-            font-size: 2rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
+        .step-text {
+            font-size: 0.75rem;
         }
-        
-        .form-title p {
-            color: var(--text-light);
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--dark);
-        }
-        
-        input, textarea, select {
-            width: 100%;
+    }
+    
+    @media (max-width: 480px) {
+        .form-progress {
             padding: 1rem;
-            border: 1px solid var(--gray);
-            border-radius: 0.5rem;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s;
         }
         
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(44, 95, 139, 0.2);
+        .step-text {
+            display: none;
         }
         
-        textarea {
-            min-height: 8rem;
-            resize: vertical;
+        .form-step {
+            padding: 1.5rem 1rem;
         }
         
-        .submit-btn {
+        .form-actions {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .btn {
             width: 100%;
-            padding: 1rem;
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 1rem;
         }
-        
-        .submit-btn:hover {
-            background-color: #c0392b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
-        }
+    }
 
         /* FAQ section */
         .faq {
@@ -1416,64 +1781,230 @@
             </div>
         </div>
     </section>
-<section class="section application" id="apply">
-        <div class="container">
-            <div class="section-title animate__animated animate__fadeInUp">
-                <h2>Подать заявку</h2>
-                <p>Заполните форму ниже, чтобы получить право использовать логотип "Сделано в Хакасии"</p>
+<section class="section application" id="application-form-section">    <div class="container">
+        <div class="section-title animate__animated animate__fadeInUp">
+            <h2>Станьте частью сообщества</h2>
+            <p>Получите официальный знак качества "Сделано в Хакасии" для вашей продукции</p>
+        </div>
+        
+        <div class="form-wrapper animate__animated animate__fadeInUp">
+            <div class="form-progress">
+                <div class="progress-steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Основная информация</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-text">О продукции</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Документы</div>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 33%"></div>
+                </div>
             </div>
             
-            <div class="form-container animate__animated animate__fadeInUp">
-                <form id="application-form">
-                    <div class="form-group">
-                        <label for="company-name">Название компании/ИП</label>
-                        <input type="text" id="company-name" name="company-name" required>
+            <form id="application-form" class="multi-step-form">
+                <!-- Шаг 1 -->
+                <div class="form-step active" data-step="1">
+                    <div class="form-header">
+                        <h3>Контактная информация</h3>
+                        <p>Заполните основные данные о вашей компании</p>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="contact-person">Контактное лицо</label>
-                        <input type="text" id="contact-person" name="contact-person" required>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="company-name">Название компании/ИП *</label>
+                            <input type="text" id="company-name" name="company-name" required placeholder="Например: ООО 'Хакасские продукты'">
+                            <div class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-person">Контактное лицо *</label>
+                            <input type="text" id="contact-person" name="contact-person" required placeholder="ФИО ответственного лица">
+                            <div class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Телефон *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+7 (XXX) XXX-XX-XX">
+                            <div class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
+                            <div class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="phone">Телефон</label>
-                        <input type="tel" id="phone" name="phone" required>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-next" data-next="2">Далее →</button>
+                    </div>
+                </div>
+                
+                <!-- Шаг 2 -->
+                <div class="form-step" data-step="2">
+                    <div class="form-header">
+                        <h3>Информация о продукции</h3>
+                        <p>Расскажите о ваших товарах и производстве</p>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="product-type">Тип продукции *</label>
+                            <select id="product-type" name="product-type" required>
+                                <option value="" disabled selected>Выберите категорию</option>
+                                <option value="food">Продукты питания</option>
+                                <option value="handmade">Ремесленные изделия</option>
+                                <option value="industrial">Промышленные товары</option>
+                                <option value="agriculture">Сельхозпродукция</option>
+                                <option value="other">Другое</option>
+                            </select>
+                            <div class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="production-place">Место производства *</label>
+                            <input type="text" id="production-place" name="production-place" required placeholder="Населенный пункт и адрес производства">
+                            <div class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="product-description">Описание продукции *</label>
+                            <textarea id="product-description" name="product-description" required placeholder="Подробно опишите вашу продукцию, используемые материалы и технологии"></textarea>
+                            <div class="textarea-counter"><span>0</span>/500</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="production-percent">Доля производства в Хакасии *</label>
+                            <div class="range-slider">
+                                <input type="range" id="production-percent" name="production-percent" min="0" max="100" value="70" step="10">
+                                <div class="range-value"><span id="percent-value">70</span>%</div>
+                            </div>
+                            <div class="range-hint">Минимальное требование: 70%</div>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="product-type">Тип продукции</label>
-                        <input type="text" id="product-type" name="product-type" required>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-prev" data-prev="1">← Назад</button>
+                        <button type="button" class="btn btn-next" data-next="3">Далее →</button>
+                    </div>
+                </div>
+                
+                <!-- Шаг 3 -->
+                <div class="form-step" data-step="3">
+                    <div class="form-header">
+                        <h3>Прикрепите документы</h3>
+                        <p>Загрузите необходимые файлы для подтверждения информации</p>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="production-place">Место производства</label>
-                        <input type="text" id="production-place" name="production-place" required>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Документы о регистрации компании *</label>
+                            <div class="file-upload">
+                                <input type="file" id="registration-docs" name="registration-docs" accept=".pdf,.jpg,.jpeg,.png" required multiple>
+                                <label for="registration-docs" class="upload-area">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                    <span>Перетащите файлы сюда или кликните для выбора</span>
+                                    <div class="file-hint">PDF, JPG, PNG (макс. 10 МБ)</div>
+                                </label>
+                                <div class="file-preview"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Сертификаты качества (если есть)</label>
+                            <div class="file-upload">
+                                <input type="file" id="quality-certs" name="quality-certs" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                                <label for="quality-certs" class="upload-area">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                    </svg>
+                                    <span>Перетащите файлы сюда или кликните для выбора</span>
+                                    <div class="file-hint">PDF, JPG, PNG (макс. 10 МБ)</div>
+                                </label>
+                                <div class="file-preview"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="additional-info">Дополнительная информация</label>
+                            <textarea id="additional-info" name="additional-info" placeholder="Любые дополнительные сведения, которые вы считаете важными"></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width checkbox-group">
+                            <input type="checkbox" id="agree-terms" name="agree-terms" required>
+                            <label for="agree-terms">Я подтверждаю достоверность предоставленных сведений и соглашаюсь с <a href="#">условиями использования</a> знака "Сделано в Хакасии" *</label>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="product-description">Описание продукции</label>
-                        <textarea id="product-description" name="product-description" required></textarea>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-prev" data-prev="2">← Назад</button>
+                        <button type="submit" class="btn btn-submit">Отправить заявку</button>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="certificates">Наличие сертификатов</label>
-                        <select id="certificates" name="certificates" required>
-                            <option value="">Выберите вариант</option>
-                            <option value="yes">Есть сертификаты качества</option>
-                            <option value="no">Нет сертификатов качества</option>
-                        </select>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Отправить заявку</button>
-                </form>
+                </div>
+            </form>
+            
+            <div class="form-success" style="display: none;">
+                <div class="success-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <h3>Заявка успешно отправлена!</h3>
+                <p>Мы получили ваши данные и свяжемся с вами в течение 24 часов. Номер вашей заявки: <strong>#HAK-<span id="application-number">0000</span></strong></p>
+                <p>На указанный email отправлено подтверждение.</p>
+                <button class="btn btn-success" id="new-application">Подать новую заявку</button>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     
     <footer>
         <div class="container">
@@ -1626,14 +2157,311 @@
         });
     });
     
-    // Form submission
-    document.getElementById('application-form').addEventListener('submit', function(e) {
-        e.preventDefault();
+     // Form functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('application-form');
+        const steps = document.querySelectorAll('.form-step');
+        const progressSteps = document.querySelectorAll('.progress-steps .step');
+        const progressFill = document.querySelector('.progress-fill');
+        const nextButtons = document.querySelectorAll('.btn-next');
+        const prevButtons = document.querySelectorAll('.btn-prev');
+        const submitButton = document.querySelector('.btn-submit');
+        const formWrapper = document.querySelector('.form-wrapper');
+        const formSuccess = document.querySelector('.form-success');
+        const newApplicationBtn = document.getElementById('new-application');
         
-        // Here you would normally send the form data to the server
-        // For demo purposes, we'll just show an alert
-        alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
-        this.reset();
+        let currentStep = 1;
+        
+        // Initialize form
+        showStep(currentStep);
+        updateProgress();
+        
+        // Next button click
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const nextStep = parseInt(this.getAttribute('data-next'));
+                
+                // Validate current step before proceeding
+                if (validateStep(currentStep)) {
+                    currentStep = nextStep;
+                    showStep(currentStep);
+                    updateProgress();
+                    scrollToTop();
+                }
+            });
+        });
+        
+        // Previous button click
+        prevButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const prevStep = parseInt(this.getAttribute('data-prev'));
+                currentStep = prevStep;
+                showStep(currentStep);
+                updateProgress();
+                scrollToTop();
+            });
+        });
+        
+        // Submit form
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateStep(currentStep)) {
+                // Simulate form submission
+                setTimeout(() => {
+                    // Generate random application number
+                    document.getElementById('application-number').textContent = Math.floor(1000 + Math.random() * 9000);
+                    
+                    // Show success message
+                    formWrapper.style.display = 'none';
+                    formSuccess.style.display = 'block';
+                    
+                    // Scroll to success message
+                    formSuccess.scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
+            }
+        });
+        
+        // New application button
+        newApplicationBtn.addEventListener('click', function() {
+            form.reset();
+            currentStep = 1;
+            showStep(currentStep);
+            updateProgress();
+            formWrapper.style.display = 'block';
+            formSuccess.style.display = 'none';
+            
+            // Reset file previews
+            document.querySelectorAll('.file-preview').forEach(preview => {
+                preview.innerHTML = '';
+            });
+            
+            // Scroll to form
+            form.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Show current step
+        function showStep(step) {
+            steps.forEach(s => {
+                if (parseInt(s.getAttribute('data-step')) === step) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+            
+            progressSteps.forEach(s => {
+                if (parseInt(s.getAttribute('data-step')) <= step) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progress = (currentStep / steps.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+        
+        // Validate current step
+        function validateStep(step) {
+            let isValid = true;
+            const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
+            
+            // Check required fields
+            const requiredFields = currentStepElement.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('error');
+                    isValid = false;
+                    
+                    // Add error message
+                    if (!field.nextElementSibling.classList.contains('error-message')) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'Это поле обязательно для заполнения';
+                        errorMsg.style.color = 'var(--secondary)';
+                        errorMsg.style.fontSize = '0.8rem';
+                        errorMsg.style.marginTop = '0.25rem';
+                        field.parentNode.insertBefore(errorMsg, field.nextSibling);
+                    }
+                } else {
+                    field.classList.remove('error');
+                    
+                    // Remove error message if exists
+                    if (field.nextElementSibling.classList.contains('error-message')) {
+                        field.nextElementSibling.remove();
+                    }
+                }
+            });
+            
+            // Specific validation for step 3 (file upload)
+            if (step === 3) {
+                const fileInput = document.getElementById('registration-docs');
+                if (fileInput.files.length === 0) {
+                    fileInput.classList.add('error');
+                    isValid = false;
+                    
+                    const uploadArea = fileInput.nextElementSibling;
+                    uploadArea.style.borderColor = 'var(--secondary)';
+                    
+                    if (!uploadArea.nextElementSibling.classList.contains('error-message')) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'Необходимо загрузить хотя бы один файл';
+                        errorMsg.style.color = 'var(--secondary)';
+                        errorMsg.style.fontSize = '0.8rem';
+                        errorMsg.style.marginTop = '0.25rem';
+                        uploadArea.parentNode.insertBefore(errorMsg, uploadArea.nextSibling);
+                    }
+                } else {
+                    fileInput.classList.remove('error');
+                    const uploadArea = fileInput.nextElementSibling;
+                    uploadArea.style.borderColor = '#e5e7eb';
+                    
+                    if (uploadArea.nextElementSibling.classList.contains('error-message')) {
+                        uploadArea.nextElementSibling.remove();
+                    }
+                }
+                
+                // Check agreement checkbox
+                const agreeCheckbox = document.getElementById('agree-terms');
+                if (!agreeCheckbox.checked) {
+                    agreeCheckbox.classList.add('error');
+                    isValid = false;
+                    
+                    if (!agreeCheckbox.nextElementSibling.classList.contains('error-message')) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'Необходимо принять условия';
+                        errorMsg.style.color = 'var(--secondary)';
+                        errorMsg.style.fontSize = '0.8rem';
+                        errorMsg.style.marginTop = '0.25rem';
+                        agreeCheckbox.parentNode.insertBefore(errorMsg, agreeCheckbox.nextSibling);
+                    }
+                } else {
+                    agreeCheckbox.classList.remove('error');
+                    
+                    if (agreeCheckbox.nextElementSibling.classList.contains('error-message')) {
+                        agreeCheckbox.nextElementSibling.remove();
+                    }
+                }
+            }
+            
+            return isValid;
+        }
+        
+        // Scroll to top of form
+        function scrollToTop() {
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Textarea character counter
+        const textarea = document.getElementById('product-description');
+        if (textarea) {
+            const counter = textarea.nextElementSibling.querySelector('span');
+            
+            textarea.addEventListener('input', function() {
+                counter.textContent = this.value.length;
+                
+                if (this.value.length > 500) {
+                    this.value = this.value.substring(0, 500);
+                    counter.textContent = 500;
+                }
+            });
+        }
+        
+        // Range slider value display
+        const rangeSlider = document.getElementById('production-percent');
+        if (rangeSlider) {
+            const percentValue = document.getElementById('percent-value');
+            
+            rangeSlider.addEventListener('input', function() {
+                percentValue.textContent = this.value;
+            });
+        }
+        
+        // File upload preview
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const preview = this.parentNode.querySelector('.file-preview');
+                preview.innerHTML = '';
+                
+                if (this.files.length > 0) {
+                    for (let i = 0; i < this.files.length; i++) {
+                        const file = this.files[i];
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        
+                        const fileIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                        fileIcon.setAttribute('width', '16');
+                        fileIcon.setAttribute('height', '16');
+                        fileIcon.setAttribute('viewBox', '0 0 24 24');
+                        fileIcon.setAttribute('fill', 'none');
+                        fileIcon.setAttribute('stroke', 'currentColor');
+                        fileIcon.setAttribute('stroke-width', '2');
+                        fileIcon.setAttribute('stroke-linecap', 'round');
+                        fileIcon.setAttribute('stroke-linejoin', 'round');
+                        
+                        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                        path.setAttribute('d', 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z');
+                        fileIcon.appendChild(path);
+                        
+                        const fileName = document.createElement('span');
+                        fileName.textContent = file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name;
+                        
+                        const removeBtn = document.createElement('button');
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.title = 'Удалить';
+                        removeBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            fileItem.remove();
+                            
+                            // Create new DataTransfer to remove file from input
+                            const dt = new DataTransfer();
+                            for (let j = 0; j < input.files.length; j++) {
+                                if (j !== i) {
+                                    dt.items.add(input.files[j]);
+                                }
+                            }
+                            input.files = dt.files;
+                        });
+                        
+                        fileItem.appendChild(fileIcon);
+                        fileItem.appendChild(fileName);
+                        fileItem.appendChild(removeBtn);
+                        preview.appendChild(fileItem);
+                    }
+                }
+            });
+        });
+        
+        // Drag and drop for file upload
+        document.querySelectorAll('.upload-area').forEach(area => {
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.style.borderColor = 'var(--primary)';
+                area.style.backgroundColor = 'rgba(44, 95, 139, 0.05)';
+            });
+            
+            area.addEventListener('dragleave', () => {
+                area.style.borderColor = '#e5e7eb';
+                area.style.backgroundColor = '#f9fafb';
+            });
+            
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.style.borderColor = '#e5e7eb';
+                area.style.backgroundColor = '#f9fafb';
+                
+                const input = area.previousElementSibling;
+                input.files = e.dataTransfer.files;
+                input.dispatchEvent(new Event('change'));
+            });
+        });
     });
 </script>
 </body>
