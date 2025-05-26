@@ -2239,180 +2239,172 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 <script>
-    // Mobile menu functionality
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-    
-    mobileMenuBtn.addEventListener('click', function() {
-        mainNav.classList.toggle('show');
-        this.textContent = mainNav.classList.contains('show') ? '✕' : '☰';
+    // Основные функции
+    document.addEventListener('DOMContentLoaded', function() {
+        initMobileMenu();
+        initHeaderScroll();
+        initSmoothScrolling();
+        initFAQAccordion();
+        initGSAPAnimations();
+        initApplicationForm();
+        setupMobileFormBehavior();
     });
-    
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (mainNav.classList.contains('show')) {
-                mainNav.classList.remove('show');
-                mobileMenuBtn.textContent = '☰';
-            }
+
+    // Инициализация мобильного меню
+    function initMobileMenu() {
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mainNav.classList.toggle('show');
+            this.textContent = mainNav.classList.contains('show') ? '✕' : '☰';
         });
-    });
-    
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
-        const header = document.getElementById('header');
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-    
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu if open
+        
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
                 if (mainNav.classList.contains('show')) {
                     mainNav.classList.remove('show');
                     mobileMenuBtn.textContent = '☰';
                 }
-            }
+            });
         });
-    });
-    
-    // FAQ Accordion functionality - исправленная версия
+    }
+
+    // Эффект скролла для хедера
+    function initHeaderScroll() {
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    }
+
+    // Плавная прокрутка
+    function initSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    }
+
+    // Аккордеон FAQ
+    function initFAQAccordion() {
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', (e) => {
-                // Проверяем, был ли клик именно по кнопке закрытия
                 const isToggleClick = e.target.classList.contains('faq-toggle') || 
                                      e.target.parentElement.classList.contains('faq-toggle');
                 
                 const faqItem = question.parentElement;
                 const isActive = faqItem.classList.contains('active');
                 
-                // Если клик был по кнопке и элемент активен - закрываем
                 if (isToggleClick && isActive) {
                     faqItem.classList.remove('active');
                     return;
                 }
                 
-                // Закрываем все другие элементы
                 document.querySelectorAll('.faq-item').forEach(item => {
-                    if (item !== faqItem) {
-                        item.classList.remove('active');
-                    }
+                    if (item !== faqItem) item.classList.remove('active');
                 });
                 
-                // Открываем текущий элемент, если он не был активен
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                }
+                if (!isActive) faqItem.classList.add('active');
             });
-    });
-
-    // GSAP animations
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Animate elements on scroll
-    gsap.utils.toArray('.animate__animated').forEach(element => {
-        const animation = element.classList.contains('animate__fadeInUp') ? 'fadeInUp' : 
-                         element.classList.contains('animate__fadeInRight') ? 'fadeInRight' : 'fadeIn';
-        
-        gsap.from(element, {
-            scrollTrigger: {
-                trigger: element,
-                start: 'top 80%',
-                toggleActions: 'play none none none'
-            },
-            opacity: 0,
-            y: animation === 'fadeInUp' ? 50 : 0,
-            x: animation === 'fadeInRight' ? 50 : 0,
-            duration: 1,
-            ease: 'power3.out'
         });
-    });
-    
-     // Form functionality
-    document.addEventListener('DOMContentLoaded', function() {
+    }
+
+    // Анимации GSAP
+    function initGSAPAnimations() {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray('.animate__animated').forEach(element => {
+            const animation = element.classList.contains('animate__fadeInUp') ? 'fadeInUp' : 
+                             element.classList.contains('animate__fadeInRight') ? 'fadeInRight' : 'fadeIn';
+            
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: animation === 'fadeInUp' ? 50 : 0,
+                x: animation === 'fadeInRight' ? 50 : 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+    }
+
+    // Форма заявки
+    function initApplicationForm() {
         const form = document.getElementById('application-form');
+        if (!form) return;
+        
         const steps = document.querySelectorAll('.form-step');
         const progressSteps = document.querySelectorAll('.progress-steps .step');
         const progressFill = document.querySelector('.progress-fill');
-        const nextButtons = document.querySelectorAll('.btn-next');
-        const prevButtons = document.querySelectorAll('.btn-prev');
-        const submitButton = document.querySelector('.btn-submit');
         const formWrapper = document.querySelector('.form-wrapper');
         const formSuccess = document.querySelector('.form-success');
         const newApplicationBtn = document.getElementById('new-application');
         
         let currentStep = 1;
         
-        // Initialize form
+        // Инициализация формы
         showStep(currentStep);
         updateProgress();
         
-        // Next button click
-        nextButtons.forEach(button => {
+        // Кнопки "Далее"
+        document.querySelectorAll('.btn-next').forEach(button => {
             button.addEventListener('click', function() {
                 const nextStep = parseInt(this.getAttribute('data-next'));
-                
-                // Validate current step before proceeding
                 if (validateStep(currentStep)) {
                     currentStep = nextStep;
                     showStep(currentStep);
                     updateProgress();
-                    scrollToTop();
+                    scrollToForm();
                 }
             });
         });
         
-        // Previous button click
-        prevButtons.forEach(button => {
+        // Кнопки "Назад"
+        document.querySelectorAll('.btn-prev').forEach(button => {
             button.addEventListener('click', function() {
                 const prevStep = parseInt(this.getAttribute('data-prev'));
                 currentStep = prevStep;
                 showStep(currentStep);
                 updateProgress();
-                scrollToTop();
+                scrollToForm();
             });
         });
         
-        // Submit form
+        // Отправка формы
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
             if (validateStep(currentStep)) {
-                // Simulate form submission
                 setTimeout(() => {
-                    // Generate random application number
                     document.getElementById('application-number').textContent = Math.floor(1000 + Math.random() * 9000);
-                    
-                    // Show success message
                     formWrapper.style.display = 'none';
                     formSuccess.style.display = 'block';
-                    
-                    // Scroll to success message
                     formSuccess.scrollIntoView({ behavior: 'smooth' });
                 }, 1000);
             }
         });
         
-        // New application button
+        // Новая заявка
         newApplicationBtn.addEventListener('click', function() {
             form.reset();
             currentStep = 1;
@@ -2421,141 +2413,19 @@
             formWrapper.style.display = 'block';
             formSuccess.style.display = 'none';
             
-            // Reset file previews
             document.querySelectorAll('.file-preview').forEach(preview => {
                 preview.innerHTML = '';
             });
             
-            // Scroll to form
             form.scrollIntoView({ behavior: 'smooth' });
         });
         
-        // Show current step
-        function showStep(step) {
-            steps.forEach(s => {
-                if (parseInt(s.getAttribute('data-step')) === step) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-            
-            progressSteps.forEach(s => {
-                if (parseInt(s.getAttribute('data-step')) <= step) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-        }
-        
-        // Update progress bar
-        function updateProgress() {
-            const progress = (currentStep / steps.length) * 100;
-            progressFill.style.width = `${progress}%`;
-        }
-        
-        // Validate current step
-        function validateStep(step) {
-            let isValid = true;
-            const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
-            
-            // Check required fields
-            const requiredFields = currentStepElement.querySelectorAll('[required]');
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    field.classList.add('error');
-                    isValid = false;
-                    
-                    // Add error message
-                    if (!field.nextElementSibling.classList.contains('error-message')) {
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Это поле обязательно для заполнения';
-                        errorMsg.style.color = 'var(--secondary)';
-                        errorMsg.style.fontSize = '0.8rem';
-                        errorMsg.style.marginTop = '0.25rem';
-                        field.parentNode.insertBefore(errorMsg, field.nextSibling);
-                    }
-                } else {
-                    field.classList.remove('error');
-                    
-                    // Remove error message if exists
-                    if (field.nextElementSibling.classList.contains('error-message')) {
-                        field.nextElementSibling.remove();
-                    }
-                }
-            });
-            
-            // Specific validation for step 3 (file upload)
-            if (step === 3) {
-                const fileInput = document.getElementById('registration-docs');
-                if (fileInput.files.length === 0) {
-                    fileInput.classList.add('error');
-                    isValid = false;
-                    
-                    const uploadArea = fileInput.nextElementSibling;
-                    uploadArea.style.borderColor = 'var(--secondary)';
-                    
-                    if (!uploadArea.nextElementSibling.classList.contains('error-message')) {
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Необходимо загрузить хотя бы один файл';
-                        errorMsg.style.color = 'var(--secondary)';
-                        errorMsg.style.fontSize = '0.8rem';
-                        errorMsg.style.marginTop = '0.25rem';
-                        uploadArea.parentNode.insertBefore(errorMsg, uploadArea.nextSibling);
-                    }
-                } else {
-                    fileInput.classList.remove('error');
-                    const uploadArea = fileInput.nextElementSibling;
-                    uploadArea.style.borderColor = '#e5e7eb';
-                    
-                    if (uploadArea.nextElementSibling.classList.contains('error-message')) {
-                        uploadArea.nextElementSibling.remove();
-                    }
-                }
-                
-                // Check agreement checkbox
-                const agreeCheckbox = document.getElementById('agree-terms');
-                if (!agreeCheckbox.checked) {
-                    agreeCheckbox.classList.add('error');
-                    isValid = false;
-                    
-                    if (!agreeCheckbox.nextElementSibling.classList.contains('error-message')) {
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Необходимо принять условия';
-                        errorMsg.style.color = 'var(--secondary)';
-                        errorMsg.style.fontSize = '0.8rem';
-                        errorMsg.style.marginTop = '0.25rem';
-                        agreeCheckbox.parentNode.insertBefore(errorMsg, agreeCheckbox.nextSibling);
-                    }
-                } else {
-                    agreeCheckbox.classList.remove('error');
-                    
-                    if (agreeCheckbox.nextElementSibling.classList.contains('error-message')) {
-                        agreeCheckbox.nextElementSibling.remove();
-                    }
-                }
-            }
-            
-            return isValid;
-        }
-        
-        // Scroll to top of form
-        function scrollToTop() {
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        // Textarea character counter
+        // Счетчик символов для textarea
         const textarea = document.getElementById('product-description');
         if (textarea) {
             const counter = textarea.nextElementSibling.querySelector('span');
-            
             textarea.addEventListener('input', function() {
                 counter.textContent = this.value.length;
-                
                 if (this.value.length > 500) {
                     this.value = this.value.substring(0, 500);
                     counter.textContent = 500;
@@ -2563,73 +2433,31 @@
             });
         }
         
-        // Range slider value display
+        // Range slider
         const rangeSlider = document.getElementById('production-percent');
         if (rangeSlider) {
             const percentValue = document.getElementById('percent-value');
-            
             rangeSlider.addEventListener('input', function() {
                 percentValue.textContent = this.value;
             });
         }
         
-        // File upload preview
+        // Загрузка файлов
         document.querySelectorAll('input[type="file"]').forEach(input => {
             input.addEventListener('change', function() {
                 const preview = this.parentNode.querySelector('.file-preview');
                 preview.innerHTML = '';
                 
                 if (this.files.length > 0) {
-                    for (let i = 0; i < this.files.length; i++) {
-                        const file = this.files[i];
-                        const fileItem = document.createElement('div');
-                        fileItem.className = 'file-item';
-                        
-                        const fileIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                        fileIcon.setAttribute('width', '16');
-                        fileIcon.setAttribute('height', '16');
-                        fileIcon.setAttribute('viewBox', '0 0 24 24');
-                        fileIcon.setAttribute('fill', 'none');
-                        fileIcon.setAttribute('stroke', 'currentColor');
-                        fileIcon.setAttribute('stroke-width', '2');
-                        fileIcon.setAttribute('stroke-linecap', 'round');
-                        fileIcon.setAttribute('stroke-linejoin', 'round');
-                        
-                        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                        path.setAttribute('d', 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z');
-                        fileIcon.appendChild(path);
-                        
-                        const fileName = document.createElement('span');
-                        fileName.textContent = file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name;
-                        
-                        const removeBtn = document.createElement('button');
-                        removeBtn.innerHTML = '&times;';
-                        removeBtn.title = 'Удалить';
-                        removeBtn.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            fileItem.remove();
-                            
-                            // Create new DataTransfer to remove file from input
-                            const dt = new DataTransfer();
-                            for (let j = 0; j < input.files.length; j++) {
-                                if (j !== i) {
-                                    dt.items.add(input.files[j]);
-                                }
-                            }
-                            input.files = dt.files;
-                        });
-                        
-                        fileItem.appendChild(fileIcon);
-                        fileItem.appendChild(fileName);
-                        fileItem.appendChild(removeBtn);
+                    Array.from(this.files).forEach((file, i) => {
+                        const fileItem = createFileItem(file, i);
                         preview.appendChild(fileItem);
-                    }
+                    });
                 }
             });
         });
         
-        // Drag and drop for file upload
+        // Drag and drop
         document.querySelectorAll('.upload-area').forEach(area => {
             area.addEventListener('dragover', (e) => {
                 e.preventDefault();
@@ -2652,151 +2480,230 @@
                 input.dispatchEvent(new Event('change'));
             });
         });
-    });
-// В функции validateStep добавьте мобильную валидацию:
-function validateStep(step) {
-    let isValid = true;
-    const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
-    
-    // Проверка полей
-    const requiredFields = currentStepElement.querySelectorAll('[required]');
-    requiredFields.forEach(field => {
-        // Пропускаем скрытые поля (например, файловые инпуты)
-        if (field.type === 'file' || field.type === 'checkbox') return;
         
-        if (!field.value.trim()) {
-            // На мобильных добавляем анимацию для привлечения внимания
-            if (window.innerWidth <= 768) {
-                gsap.to(field, {
-                    x: [-5, 5, -5, 5, 0],
-                    duration: 0.5,
-                    ease: "power1.inOut"
-                });
-            }
+        // Вспомогательные функции формы
+        function showStep(step) {
+            steps.forEach(s => {
+                s.classList.toggle('active', parseInt(s.getAttribute('data-step')) === step);
+            });
             
-            field.classList.add('error');
-            isValid = false;
-            
-            // Прокрутка к первому ошибочному полю на мобильных
-            if (isValid && window.innerWidth <= 768) {
-                field.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            progressSteps.forEach(s => {
+                s.classList.toggle('active', parseInt(s.getAttribute('data-step')) <= step);
+            });
         }
-    });
-    
-    // Остальная логика валидации...
-}
-
-// Добавьте обработчик изменения ориентации экрана
-window.addEventListener('orientationchange', function() {
-    // Пересчитываем позиции элементов после изменения ориентации
-    ScrollTrigger.refresh();
-});
-
-// Оптимизация для мобильных устройств - предотвращаем масштабирование при фокусе
-document.querySelectorAll('input, textarea, select').forEach(el => {
-    el.addEventListener('focus', function() {
-        if (window.innerWidth <= 768) {
-            window.scrollTo(0, 0);
-            document.body.style.zoom = "100%";
+        
+        function updateProgress() {
+            const progress = (currentStep / steps.length) * 100;
+            progressFill.style.width = `${progress}%`;
         }
-    });
-});
-    // Функция для управления скроллом при фокусе
-function setupMobileFormBehavior() {
-    if (window.innerWidth > 768) return; // Только для мобильных
-    
-    let activeElement = null;
-    let initialScroll = 0;
-    
-    // Запоминаем позицию перед фокусом
-    document.addEventListener('focusin', function(e) {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-            activeElement = e.target;
-            initialScroll = window.pageYOffset;
+        
+        function validateStep(step) {
+            let isValid = true;
+            const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
             
-            // Небольшая задержка для стабилизации
-            setTimeout(() => {
-                const elementRect = activeElement.getBoundingClientRect();
-                const absoluteElementTop = elementRect.top + window.pageYOffset;
-                const middle = absoluteElementTop - (window.innerHeight / 3);
+            // Проверка обязательных полей
+            currentStepElement.querySelectorAll('[required]').forEach(field => {
+                if (field.type === 'file') {
+                    isValid = validateFileInput(field) && isValid;
+                } else if (field.type === 'checkbox') {
+                    isValid = validateCheckbox(field) && isValid;
+                } else {
+                    isValid = validateTextField(field) && isValid;
+                }
+            });
+            
+            return isValid;
+        }
+        
+        function validateTextField(field) {
+            if (!field.value.trim()) {
+                field.classList.add('error');
+                addErrorMessage(field, 'Это поле обязательно для заполнения');
                 
-                window.scrollTo({
-                    top: middle,
-                    behavior: 'smooth'
+                // На мобильных - анимация и прокрутка к ошибке
+                if (window.innerWidth <= 768) {
+                    gsap.to(field, { x: [-5, 5, -5, 5, 0], duration: 0.5, ease: "power1.inOut" });
+                    setTimeout(() => field.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+                }
+                return false;
+            }
+            
+            field.classList.remove('error');
+            removeErrorMessage(field);
+            return true;
+        }
+        
+        function validateFileInput(input) {
+            if (input.files.length === 0) {
+                input.classList.add('error');
+                const uploadArea = input.nextElementSibling;
+                uploadArea.style.borderColor = 'var(--secondary)';
+                addErrorMessage(uploadArea, 'Необходимо загрузить хотя бы один файл');
+                return false;
+            }
+            
+            input.classList.remove('error');
+            const uploadArea = input.nextElementSibling;
+            uploadArea.style.borderColor = '#e5e7eb';
+            removeErrorMessage(uploadArea);
+            return true;
+        }
+        
+        function validateCheckbox(checkbox) {
+            if (!checkbox.checked) {
+                checkbox.classList.add('error');
+                addErrorMessage(checkbox, 'Необходимо принять условия');
+                return false;
+            }
+            
+            checkbox.classList.remove('error');
+            removeErrorMessage(checkbox);
+            return true;
+        }
+        
+        function addErrorMessage(element, message) {
+            if (element.nextElementSibling && !element.nextElementSibling.classList.contains('error-message')) {
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = message;
+                errorMsg.style.color = 'var(--secondary)';
+                errorMsg.style.fontSize = '0.8rem';
+                errorMsg.style.marginTop = '0.25rem';
+                element.parentNode.insertBefore(errorMsg, element.nextSibling);
+            }
+        }
+        
+        function removeErrorMessage(element) {
+            if (element.nextElementSibling && element.nextElementSibling.classList.contains('error-message')) {
+                element.nextElementSibling.remove();
+            }
+        }
+        
+        function scrollToForm() {
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function createFileItem(file, index) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            
+            const fileIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            fileIcon.setAttribute('width', '16');
+            fileIcon.setAttribute('height', '16');
+            fileIcon.setAttribute('viewBox', '0 0 24 24');
+            fileIcon.setAttribute('fill', 'none');
+            fileIcon.setAttribute('stroke', 'currentColor');
+            fileIcon.setAttribute('stroke-width', '2');
+            fileIcon.setAttribute('stroke-linecap', 'round');
+            fileIcon.setAttribute('stroke-linejoin', 'round');
+            
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z');
+            fileIcon.appendChild(path);
+            
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.innerHTML = '&times;';
+            removeBtn.title = 'Удалить';
+            removeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                fileItem.remove();
+                
+                const dt = new DataTransfer();
+                const input = fileItem.closest('.file-upload').querySelector('input[type="file"]');
+                Array.from(input.files).forEach((f, i) => {
+                    if (i !== index) dt.items.add(f);
                 });
-            }, 100);
+                input.files = dt.files;
+            });
+            
+            fileItem.appendChild(fileIcon);
+            fileItem.appendChild(fileName);
+            fileItem.appendChild(removeBtn);
+            
+            return fileItem;
         }
-    });
-    
-    // Восстанавливаем позицию после потери фокуса
-    document.addEventListener('focusout', function(e) {
-        if (activeElement) {
-            setTimeout(() => {
-                window.scrollTo({
-                    top: initialScroll,
-                    behavior: 'smooth'
-                });
-                activeElement = null;
-            }, 300);
-        }
-    });
-    
-    // Фикс для iOS
-    document.body.addEventListener('touchend', function(e) {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-            e.preventDefault();
-            e.target.focus();
-        }
-    }, false);
-}
+    }
 
-// Вызываем при загрузке и при ресайзе
-window.addEventListener('DOMContentLoaded', setupMobileFormBehavior);
-window.addEventListener('resize', setupMobileFormBehavior);
-
-// Дополнительный фикс для iOS
-document.addEventListener('DOMContentLoaded', function() {
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        document.body.addEventListener('focusin', function() {
-            window.scrollTo(0, 0);
+    // Оптимизация для мобильных устройств
+    function setupMobileFormBehavior() {
+        if (window.innerWidth > 768) return;
+        
+        let activeElement = null;
+        let initialScroll = 0;
+        
+        // Фикс для iOS
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            document.body.addEventListener('focusin', function() {
+                window.scrollTo(0, 0);
+            });
+        }
+        
+        // Фикс для Android
+        if (/Android/i.test(navigator.userAgent)) {
+            window.addEventListener('resize', function() {
+                if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                    setTimeout(() => {
+                        document.activeElement.scrollIntoView({
+                            block: 'center',
+                            behavior: 'smooth'
+                        });
+                    }, 300);
+                }
+            });
+        }
+        
+        // Позиционирование при фокусе
+        document.addEventListener('focusin', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                activeElement = e.target;
+                initialScroll = window.pageYOffset;
+                
+                setTimeout(() => {
+                    const elementRect = activeElement.getBoundingClientRect();
+                    const absoluteElementTop = elementRect.top + window.pageYOffset;
+                    const middle = absoluteElementTop - (window.innerHeight / 3);
+                    
+                    window.scrollTo({
+                        top: middle,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+        });
+        
+        // Восстановление позиции после потери фокуса
+        document.addEventListener('focusout', function(e) {
+            if (activeElement) {
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: initialScroll,
+                        behavior: 'smooth'
+                    });
+                    activeElement = null;
+                }, 300);
+            }
+        });
+        
+        // Фикс для тач-событий iOS
+        document.body.addEventListener('touchend', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+                e.preventDefault();
+                e.target.focus();
+            }
+        }, false);
+        
+        // Предотвращение масштабирования при фокусе
+        document.querySelectorAll('input, textarea, select').forEach(el => {
+            el.addEventListener('focus', function() {
+                window.scrollTo(0, 0);
+                document.body.style.zoom = "100%";
+            });
         });
     }
-});
-    // В функции validateStep добавьте:
-function validateStep(step) {
-    let isValid = true;
-    const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
-    
-    // На мобильных - плавная прокрутка к ошибке
-    const scrollToInvalidField = function(field) {
-        if (window.innerWidth <= 768) {
-            setTimeout(() => {
-                const yOffset = -80; // Компенсация для шапки
-                const y = field.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                
-                window.scrollTo({
-                    top: y,
-                    behavior: 'smooth'
-                });
-            }, 300);
-        }
-    };
-    // Фикс для Android клавиатуры
-if (/Android/i.test(navigator.userAgent)) {
-    window.addEventListener('resize', function() {
-        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-            window.setTimeout(function() {
-                document.activeElement.scrollIntoView({
-                    block: 'center',
-                    behavior: 'smooth'
-                });
-            }, 300);
-        }
-    });
-}
-    // Остальная логика валидации...
-}
 </script>
 </body>
 </html>
