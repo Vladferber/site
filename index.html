@@ -1214,7 +1214,32 @@
         appearance: none;
         font-size: 16px; /* Предотвращает автоматическое увеличение в iOS */
     }
+    @media (max-width: 768px) {
+    /* Фиксируем body при открытии клавиатуры */
+    body {
+        height: 100%;
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
     
+    /* Улучшаем поведение инпутов */
+    input, textarea, select {
+        font-size: 16px !important; /* Предотвращает зум в iOS */
+        transform: translateZ(0); /* Фикс для Android */
+    }
+    
+    /* Убираем скачки при фокусе */
+    .form-group {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    
+    /* Фикс для textarea */
+    textarea {
+        resize: none; /* Отключаем ресайз на мобильных */
+    }
+}
     /* Улучшение для выпадающих списков */
     select {
         background-size: 12px;
@@ -2677,6 +2702,101 @@ document.querySelectorAll('input, textarea, select').forEach(el => {
         }
     });
 });
+    // Функция для управления скроллом при фокусе
+function setupMobileFormBehavior() {
+    if (window.innerWidth > 768) return; // Только для мобильных
+    
+    let activeElement = null;
+    let initialScroll = 0;
+    
+    // Запоминаем позицию перед фокусом
+    document.addEventListener('focusin', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+            activeElement = e.target;
+            initialScroll = window.pageYOffset;
+            
+            // Небольшая задержка для стабилизации
+            setTimeout(() => {
+                const elementRect = activeElement.getBoundingClientRect();
+                const absoluteElementTop = elementRect.top + window.pageYOffset;
+                const middle = absoluteElementTop - (window.innerHeight / 3);
+                
+                window.scrollTo({
+                    top: middle,
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
+    });
+    
+    // Восстанавливаем позицию после потери фокуса
+    document.addEventListener('focusout', function(e) {
+        if (activeElement) {
+            setTimeout(() => {
+                window.scrollTo({
+                    top: initialScroll,
+                    behavior: 'smooth'
+                });
+                activeElement = null;
+            }, 300);
+        }
+    });
+    
+    // Фикс для iOS
+    document.body.addEventListener('touchend', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+            e.preventDefault();
+            e.target.focus();
+        }
+    }, false);
+}
+
+// Вызываем при загрузке и при ресайзе
+window.addEventListener('DOMContentLoaded', setupMobileFormBehavior);
+window.addEventListener('resize', setupMobileFormBehavior);
+
+// Дополнительный фикс для iOS
+document.addEventListener('DOMContentLoaded', function() {
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        document.body.addEventListener('focusin', function() {
+            window.scrollTo(0, 0);
+        });
+    }
+});
+    // В функции validateStep добавьте:
+function validateStep(step) {
+    let isValid = true;
+    const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
+    
+    // На мобильных - плавная прокрутка к ошибке
+    const scrollToInvalidField = function(field) {
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                const yOffset = -80; // Компенсация для шапки
+                const y = field.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth'
+                });
+            }, 300);
+        }
+    };
+    // Фикс для Android клавиатуры
+if (/Android/i.test(navigator.userAgent)) {
+    window.addEventListener('resize', function() {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+            window.setTimeout(function() {
+                document.activeElement.scrollIntoView({
+                    block: 'center',
+                    behavior: 'smooth'
+                });
+            }, 300);
+        }
+    });
+}
+    // Остальная логика валидации...
+}
 </script>
 </body>
 </html>
