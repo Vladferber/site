@@ -1735,6 +1735,12 @@
             input, textarea, select {
                 padding: 0.8rem;
             }
+            .no-scroll {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
         }
     </style>
 </head>
@@ -2239,7 +2245,7 @@
         </div>
     </footer>
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 <script>
     // Основные функции
@@ -2261,6 +2267,7 @@
         mobileMenuBtn.addEventListener('click', function() {
             mainNav.classList.toggle('show');
             this.textContent = mainNav.classList.contains('show') ? '✕' : '☰';
+            document.body.classList.toggle('no-scroll', mainNav.classList.contains('show'));
         });
         
         // Закрытие меню при клике на ссылку
@@ -2269,6 +2276,7 @@
                 if (mainNav.classList.contains('show')) {
                     mainNav.classList.remove('show');
                     mobileMenuBtn.textContent = '☰';
+                    document.body.classList.remove('no-scroll');
                 }
             });
         });
@@ -2286,17 +2294,18 @@
     function initSmoothScrolling() {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                if (this.getAttribute('href') === '#application-form-section') {
+                    // Для формы делаем плавную прокрутку
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
+                // Для остальных ссылок оставляем стандартное поведение
             });
         });
     }
@@ -2635,27 +2644,6 @@
         let activeElement = null;
         let initialScroll = 0;
         
-        // Фикс для iOS
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            document.body.addEventListener('focusin', function() {
-                window.scrollTo(0, 0);
-            });
-        }
-        
-        // Фикс для Android
-        if (/Android/i.test(navigator.userAgent)) {
-            window.addEventListener('resize', function() {
-                if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-                    setTimeout(() => {
-                        document.activeElement.scrollIntoView({
-                            block: 'center',
-                            behavior: 'smooth'
-                        });
-                    }, 300);
-                }
-            });
-        }
-        
         // Позиционирование при фокусе
         document.addEventListener('focusin', function(e) {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
@@ -2687,23 +2675,8 @@
                 }, 300);
             }
         });
-        
-        // Фикс для тач-событий iOS
-        document.body.addEventListener('touchend', function(e) {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-                e.preventDefault();
-                e.target.focus();
-            }
-        }, false);
-        
-        // Предотвращение масштабирования при фокусе
-        document.querySelectorAll('input, textarea, select').forEach(el => {
-            el.addEventListener('focus', function() {
-                window.scrollTo(0, 0);
-                document.body.style.zoom = "100%";
-            });
-        });
     }
+</script>
 </script>
 </body>
 </html>
