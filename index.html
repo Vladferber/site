@@ -2243,15 +2243,106 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 <script>
     // Основные функции
-    document.addEventListener('DOMContentLoaded', function() {
-        initMobileMenu();
-        initHeaderScroll();
-        initSmoothScrolling();
-        initFAQAccordion();
-        initGSAPAnimations();
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Основные инициализации
+    initMobileMenu();
+    initSmoothScrolling();
+    
+    // Отдельная инициализация для формы
+    if (document.getElementById('application-form-section')) {
         initApplicationForm();
-        setupMobileFormBehavior();
+    }
+});
+
+function initMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    
+    if (!mobileMenuBtn || !mainNav) return;
+    
+    mobileMenuBtn.addEventListener('click', function() {
+        const isOpen = mainNav.classList.toggle('show');
+        this.textContent = isOpen ? '✕' : '☰';
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     });
+    
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (mainNav.classList.contains('show')) {
+                mainNav.classList.remove('show');
+                mobileMenuBtn.textContent = '☰';
+                document.body.style.overflow = '';
+            }
+        });
+    });
+}
+
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+function initApplicationForm() {
+    const form = document.getElementById('application-form');
+    if (!form) return;
+    
+    // Упрощенная версия обработки формы
+    let currentStep = 1;
+    const steps = document.querySelectorAll('.form-step');
+    
+    function showStep(step) {
+        steps.forEach((s, i) => {
+            s.classList.toggle('active', i === step - 1);
+        });
+    }
+    
+    document.querySelectorAll('[data-next]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentStep++;
+            showStep(currentStep);
+        });
+    });
+    
+    document.querySelectorAll('[data-prev]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentStep--;
+            showStep(currentStep);
+        });
+    });
+    
+    // Оптимизация для мобильных устройств
+    if (window.innerWidth <= 768) {
+        setupMobileFormBehavior();
+    }
+}
+
+function setupMobileFormBehavior() {
+    // Минимальная необходимая логика для мобильных
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+        el.addEventListener('focus', function() {
+            setTimeout(() => {
+                this.scrollIntoView({
+                    block: 'center',
+                    behavior: 'smooth'
+                });
+            }, 300);
+        });
+    });
+}
 
     // Инициализация мобильного меню
     function initMobileMenu() {
