@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       submitBtn.disabled = true;
 
       // Отправка на сервер
-      fetch('https:/madeinkhakassia.ru.spaceweb.ru/mail.php', {
+      fetch('https://madeinkhakassia.ru.swtest.ru/mail.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
