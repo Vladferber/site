@@ -29,7 +29,14 @@ $headers = "From: mail@madeinkhakassia.ru\r\n";
 $headers .= "Reply-To: mail@madeinkhakassia.ru\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion();
-
+// Добавьте в mail.php после headers
+if (!empty($_FILES)) {
+    $boundary = md5(time());
+    $headers .= "\r\nMIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+    
+    // Обработка файлов...
+}
 // Отправка письма
 if (mail($to, $subject, $message, $headers)) {
     echo json_encode(['success' => true]);
