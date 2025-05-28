@@ -2305,19 +2305,30 @@
     });
     
      // Form functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('application-form');
-        const steps = document.querySelectorAll('.form-step');
-        const progressSteps = document.querySelectorAll('.progress-steps .step');
-        const progressFill = document.querySelector('.progress-fill');
-        const nextButtons = document.querySelectorAll('.btn-next');
-        const prevButtons = document.querySelectorAll('.btn-prev');
-        const submitButton = document.querySelector('.btn-submit');
-        const formWrapper = document.querySelector('.form-wrapper');
-        const formSuccess = document.querySelector('.form-success');
-        const newApplicationBtn = document.getElementById('new-application');
+   document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
         
-        let currentStep = 1;
+        fetch('/mail.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Успешно отправлено!');
+                form.reset();
+            } else {
+                alert('Ошибка: ' + (data.error || ''));
+            }
+        })
+        .catch(error => alert('Ошибка сети: ' + error));
+    });
+});
         
         // Initialize form
         showStep(currentStep);
