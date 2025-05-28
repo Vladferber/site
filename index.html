@@ -2350,65 +2350,24 @@
         });
         
         // Submit form
-        form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    if (!validateStep(currentStep)) return;
-
-    const submitBtn = this.querySelector('button[type="submit"]');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Отправка...';
-
-    try {
-        // Собираем данные формы
-        const formData = new FormData(this);
-        
-        // Добавляем проверочный параметр
-        formData.append('ajax_request', 'true');
-        
-        // Указываем абсолютный URL
-        const response = await 
-            document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('contactForm');
-    
-    if (!form) {
-        console.error('Форма не найдена! Проверьте HTML-код');
-        return;
-    }
-
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        try {
-            const response = await fetch('mail.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: this.name.value,
-                    email: this.email.value,
-                    message: this.message.value
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateStep(currentStep)) {
+                // Simulate form submission
+                setTimeout(() => {
+                    // Generate random application number
+                    document.getElementById('application-number').textContent = Math.floor(1000 + Math.random() * 9000);
+                    
+                    // Show success message
+                    formWrapper.style.display = 'none';
+                    formSuccess.style.display = 'block';
+                    
+                    // Scroll to success message
+                    formSuccess.scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
             }
-
-            const data = await response.json();
-            if (data.success) {
-                alert('Успешно отправлено!');
-                this.reset();
-            } else {
-                throw new Error(data.error || 'Неизвестная ошибка сервера');
-            }
-        } catch (error) {
-            console.error('Ошибка:', error);
-            alert('Ошибка отправки: ' + error.message);
-        }
-    });
-});
+        });
 
         
         // New application button
