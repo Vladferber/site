@@ -29,27 +29,3 @@ if (mail($to, $subject, $message, $headers)) {
     echo json_encode(['error' => 'Ошибка отправки']);
 }
 ?>
-<?php
-use PHPMailer\PHPMailer\PHPMailer;
-require 'vendor/autoload.php';
-
-$mail = new PHPMailer();
-$mail->isSMTP();
-$mail->Host = 'smtp.spaceweb.ru';
-$mail->SMTPAuth = true;
-$mail->Username = 'fondrhmail';
-$mail->Password = '51wGa#Rh';
-$mail->SMTPSecure = 'ssl';
-$mail->Port = 465;
-
-$mail->setFrom('no-reply@madeinkhakassia.ru');
-$mail->addAddress('fondrh@mail.ru');
-$mail->Subject = 'Новая заявка';
-$mail->Body = print_r($_POST, true);
-
-if ($mail->send()) {
-    echo json_encode(['success' => true]);
-} else {
-    echo json_encode(['error' => $mail->ErrorInfo]);
-}
-?>
