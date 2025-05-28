@@ -26,12 +26,12 @@ $mail = new PHPMailer\PHPMailer\PHPMailer(true);
 
 try {
     $mail->isSMTP();
-    $mail->Host = 'smtp.beget.com';
+    $mail->Host = 'smtp.spaceweb.ru';
     $mail->SMTPAuth = true;
     $mail->Username = 'mail@madeinkhakassia.ru';
-    $mail->Password = 'ваш_пароль';
+    $mail->Password = '51wGa#Rh';
     $mail->SMTPSecure = 'ssl';
-    $mail->Port = 465;
+    $mail->Port = 2525;
 
     $mail->setFrom('mail@madeinkhakassia.ru', 'Заявка с сайта');
     $mail->addAddress('fondrh@mail.ru');
