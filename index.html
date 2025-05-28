@@ -2359,6 +2359,11 @@
                     // Generate random application number
                     document.getElementById('application-number').textContent = Math.floor(1000 + Math.random() * 9000);
                     document.addEventListener('DOMContentLoaded', function() {
+                        fetch('/sendmail.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: 'Имя', phone: 'Телефон' })
+})
     const form = document.querySelector('application-form-section'); // Укажите селектор вашей формы
     
     if (form) {
