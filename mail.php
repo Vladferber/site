@@ -1,4 +1,20 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // Разрешить запросы с любого домена (для теста)
+header("Access-Control-Allow-Methods: POST, OPTIONS"); // Разрешить POST
+header("Content-Type: application/json"); // Указать тип ответа
+
+// Если запрос OPTIONS (preflight CORS) — завершаем скрипт
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit;
+}
+
+// Проверяем, что запрос POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    die(json_encode(["error" => "Метод не разрешён. Используйте POST."]));
+}
+
+// Далее ваш код обработки формы...
 header("Access-Control-Allow-Origin: https://www.madeinkhakassia.ru");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
