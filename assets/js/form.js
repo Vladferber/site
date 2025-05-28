@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
 
             // Отправка на сервер
-            fetch('https://madeinkhakassia.ru/mail.php', {
+            fetch('https://github.com/Vladferber/vladferber.github.io/blob/codespace-upgraded-guide-69wjq6gwg4xjh5g4r/mail.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
