@@ -1,56 +1,46 @@
 <?php
-header("Access-Control-Allow-Origin: *"); // Разрешить запросы с любого домена (для теста)
-header("Access-Control-Allow-Methods: POST, OPTIONS"); // Разрешить POST
-header("Content-Type: application/json"); // Указать тип ответа
+header("Access-Control-Allow-Origin: https://www.madeinkhakassia.ru");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Content-Type: application/json");
 
-// Если запрос OPTIONS (preflight CORS) — завершаем скрипт
+// Предварительный CORS-запрос
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Проверяем, что запрос POST
+// Проверяем метод
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    die(json_encode(["error" => "Метод не разрешён. Используйте POST."]));
+    die(json_encode(["error" => "Только POST-запросы разрешены"]));
 }
 
-// Далее ваш код обработки формы...
-header("Access-Control-Allow-Origin: https://www.madeinkhakassia.ru");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json");
+// Данные из формы
+$data = json_decode(file_get_contents('php://input'), true);
+$name = htmlspecialchars($data['name'] ?? '');
+$email = filter_var($data['email'] ?? '', FILTER_SANITIZE_EMAIL);
+$message = htmlspecialchars($data['message'] ?? '');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit; // Предварительный CORS-запрос (preflight)
+// Настройки SMTP (для mail@madeinkhakassia.ru)
+require 'vendor/autoload.php'; // Подключение PHPMailer
+$mail = new PHPMailer\PHPMailer\PHPMailer(true);
+
+try {
+    $mail->isSMTP();
+    $mail->Host = 'smtp.beget.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'mail@madeinkhakassia.ru';
+    $mail->Password = 'ваш_пароль';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
+
+    $mail->setFrom('mail@madeinkhakassia.ru', 'Заявка с сайта');
+    $mail->addAddress('fondrh@mail.ru');
+    $mail->Subject = "Новая заявка от $name";
+    $mail->Body = "Имя: $name\nEmail: $email\nСообщение: $message";
+
+    $mail->send();
+    echo json_encode(["success" => true]);
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(["error" => "Ошибка отправки: " . $e->getMessage()]);
 }
-
-header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: *"); // Разрешить запросы с любого домена
-
-// Получаем данные из формы
-$data = [
-    'name' => $_POST['name'] ?? 'Не указано',
-    'phone' => $_POST['phone'] ?? 'Не указано',
-    'email' => $_POST['email'] ?? 'Не указано',
-    'message' => $_POST['message'] ?? 'Не указано'
-];
-
-// Настройки письма
-$to = "fondrh@mail.ru";
-$subject = "Новая заявка с сайта madeinkhakassia.ru";
-$message = "
-    Имя: {$data['name']}\n
-    Телефон: {$data['phone']}\n
-    Email: {$data['email']}\n
-    Сообщение: {$data['message']}
-";
-$headers = "From: mail@madeinkhakassia.ru\r\n";
-$headers .= "Reply-To: {$data['email']}\r\n";
-
-// Отправляем письмо
-if (mail($to, $subject, $message, $headers)) {
-    echo json_encode(['success' => true]);
-} else {
-    echo json_encode(['error' => 'Ошибка отправки']);
-}
-?>
