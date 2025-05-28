@@ -1,50 +1,44 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+
 header('Content-Type: application/json');
 
-// Проверка метода запроса
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Неправильный метод запроса']);
-    exit;
-}
+$mail = new PHPMailer(true);
 
-// Получение данных из формы
-$data = json_decode(file_get_contents('php://input'), true);
+try {
+    // Настройки SMTP SpaceWeb
+    $mail->isSMTP();
+    $mail->Host = 'smtp.spaceweb.ru';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'mail@madeinkhakassia.ru'; // Полный email
+    $mail->Password = '51wGa#Rh';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
+    $mail->CharSet = 'UTF-8';
 
-// Проверка данных
-if (empty($data)) {
-    echo json_encode(['success' => false, 'message' => 'Нет данных формы']);
-    exit;
-}
-
-// Настройки почты
-$to = 'fondrh@mail.ru'; // Ваш email для получения заявок
-$subject = 'Новая заявка на логотип "Сделано в Хакасии"';
-$from = 'mail@madeinkhakassia.ru'; // Email отправителя (лучше использовать домен вашего сайта)
-
-// Формирование тела письма
-$message = "Новая заявка на получение логотипа \"Сделано в Хакасии\"\n\n";
-$message .= "Компания: " . htmlspecialchars($data['company-name']) . "\n";
-$message .= "Контактное лицо: " . htmlspecialchars($data['contact-person']) . "\n";
-$message .= "Телефон: " . htmlspecialchars($data['phone']) . "\n";
-$message .= "Email: " . htmlspecialchars($data['email']) . "\n\n";
-$message .= "Информация о продукции:\n";
-$message .= "Тип продукции: " . htmlspecialchars($data['product-type']) . "\n";
-$message .= "Место производства: " . htmlspecialchars($data['production-place']) . "\n";
-$message .= "Доля производства в Хакасии: " . htmlspecialchars($data['production-percent']) . "%\n";
-$message .= "Описание продукции:\n" . htmlspecialchars($data['product-description']) . "\n\n";
-$message .= "Дополнительная информация:\n" . htmlspecialchars($data['additional-info']) . "\n";
-
-// Заголовки письма
-$headers = "From: $from\r\n";
-$headers .= "Reply-To: " . htmlspecialchars($data['email']) . "\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion();
-
-// Отправка письма
-$mailSent = mail($to, $subject, $message, $headers);
-
-if ($mailSent) {
-    echo json_encode(['success' => true, 'message' => 'Заявка успешно отправлена!']);
-} else {
-    echo json_encode(['success' => false, 'message' => 'Ошибка при отправке заявки. Пожалуйста, попробуйте позже.']);
+    // От кого
+    $mail->setFrom('mail@madeinkhakassia.ru', 'Сайт "Сделано в Хакасии"');
+    
+    // Кому
+    $mail->addAddress('fondrh@mail.ru');
+    
+    // Тема и тело
+    $mail->Subject = 'Новая заявка';
+    $mail->Body    = json_encode($_POST, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    
+    $mail->send();
+    echo json_encode(['success' => true]);
+} catch (Exception $e) {
+    error_log('Mailer Error: ' . $mail->ErrorInfo);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Ошибка отправки',
+        'debug' => $mail->ErrorInfo // Только для разработки!
+    ]);
 }
 ?>
