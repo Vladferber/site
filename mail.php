@@ -19,7 +19,7 @@ $message = "
     Email: {$data['email']}\n
     Сообщение: {$data['message']}
 ";
-$headers = "From: no-reply@madeinkhakassia.ru\r\n";
+$headers = "From: mail@madeinkhakassia.ru\r\n";
 $headers .= "Reply-To: {$data['email']}\r\n";
 
 // Отправляем письмо
