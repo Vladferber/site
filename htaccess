@@ -6,3 +6,6 @@ RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 <Files "mail.php">
     Require all granted
 </Files>
+<IfModule mod_security.c>
+    SecRuleRemoveById 300015 300016 300017
+</IfModule>
