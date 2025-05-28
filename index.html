@@ -2349,24 +2349,53 @@
         });
         
         // Submit form
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (validateStep(currentStep)) {
-                // Simulate form submission
-                setTimeout(() => {
-                    // Generate random application number
-                    document.getElementById('application-number').textContent = Math.floor(1000 + Math.random() * 9000);
-                    
-                    // Show success message
-                    formWrapper.style.display = 'none';
-                    formSuccess.style.display = 'block';
-                    
-                    // Scroll to success message
-                    formSuccess.scrollIntoView({ behavior: 'smooth' });
-                }, 1000);
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (validateStep(currentStep)) {
+        // Собираем данные формы
+        const formData = {
+            'company-name': document.getElementById('company-name').value,
+            'contact-person': document.getElementById('contact-person').value,
+            'phone': document.getElementById('phone').value,
+            'email': document.getElementById('email').value,
+            'product-type': document.getElementById('product-type').value,
+            'production-place': document.getElementById('production-place').value,
+            'production-percent': document.getElementById('production-percent').value,
+            'product-description': document.getElementById('product-description').value,
+            'additional-info': document.getElementById('additional-info').value
+        };
+        
+        // Отправляем данные на сервер
+        fetch('sendmail.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Generate random application number
+                document.getElementById('application-number').textContent = Math.floor(1000 + Math.random() * 9000);
+                
+                // Show success message
+                formWrapper.style.display = 'none';
+                formSuccess.style.display = 'block';
+                
+                // Scroll to success message
+                formSuccess.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert(data.message || 'Произошла ошибка при отправке формы');
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Произошла ошибка при отправке формы');
         });
+    }
+});
         
         // New application button
         newApplicationBtn.addEventListener('click', function() {
