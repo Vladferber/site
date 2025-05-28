@@ -2369,57 +2369,43 @@
         // Указываем абсолютный URL
         const response = await 
             document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('application-form-section');
-    const messageDiv = document.getElementById('formMessage');
-
+    const form = document.getElementById('contactForm');
+    
     if (!form) {
-        console.error('Форма не найдена! Проверьте ID элемента');
+        console.error('Форма не найдена! Проверьте HTML-код');
         return;
     }
 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Показываем индикатор загрузки
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Отправка...';
-        messageDiv.textContent = '';
-        messageDiv.className = 'form-message';
-
         try {
-            const formData = {
-                name: form.name.value.trim(),
-                email: form.email.value.trim(),
-                message: form.message.value.trim()
-            };
-
-            const response = await fetch('https://madeinkhakassia.ru/mail.php', {
+            const response = await fetch('mail.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    name: this.name.value,
+                    email: this.email.value,
+                    message: this.message.value
+                })
             });
 
-            const data = await response.json();
-
-            if (!response.ok || !data.success) {
-                throw new Error(data.error || 'Ошибка сервера');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // Успешная отправка
-            messageDiv.textContent = 'Сообщение успешно отправлено!';
-            messageDiv.className = 'form-success';
-            form.reset();
+            const data = await response.json();
+            if (data.success) {
+                alert('Успешно отправлено!');
+                this.reset();
+            } else {
+                throw new Error(data.error || 'Неизвестная ошибка сервера');
+            }
         } catch (error) {
             console.error('Ошибка:', error);
-            messageDiv.textContent = 'Ошибка: ' + error.message;
-            messageDiv.className = 'form-message error';
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalBtnText;
+            alert('Ошибка отправки: ' + error.message);
         }
     });
 });
