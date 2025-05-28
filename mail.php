@@ -1,4 +1,13 @@
 <?php
+header("Access-Control-Allow-Origin: https://www.madeinkhakassia.ru");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit; // Предварительный CORS-запрос (preflight)
+}
+
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *"); // Разрешить запросы с любого домена
 
