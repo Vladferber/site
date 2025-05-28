@@ -2356,64 +2356,38 @@
             if (validateStep(currentStep)) {
                 // Simulate form submission
                 setTimeout(() => {
-                    // Generate random application number
-                    document.getElementById('application-number').textContent = Math.floor(1000 + Math.random() * 9000);
-                    document.addEventListener('DOMContentLoaded', function() {
-                        fetch('/sendmail.php', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ name: 'Имя', phone: 'Телефон' })
-})
-    const form = document.querySelector('application-form-section'); // Укажите селектор вашей формы
+                  document.getElementById('application-form').addEventListener('submit', function(e) {
+    e.preventDefault();
     
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = {
-                name: form.querySelector('[name="name"]')?.value,
-                phone: form.querySelector('[name="phone"]')?.value,
-                email: form.querySelector('[name="email"]')?.value,
-                message: form.querySelector('[name="message"]')?.value
-            };
-            
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            
-            // Показываем загрузку
-            submitButton.disabled = true;
-            submitButton.textContent = 'Отправка...';
-            
-            fetch('/sendmail.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Успешная отправка
-                    alert('Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
-                    form.reset();
-                    
-                    // Можно добавить перенаправление
-                    // window.location.href = '/thank-you.html';
-                } else {
-                    // Ошибка
-                    alert('Произошла ошибка: ' + data.message);
-                }
-            })
-            .catch(error => {
-                alert('Произошла ошибка при отправке формы: ' + error.message);
-            })
-            .finally(() => {
-                submitButton.disabled = false;
-                submitButton.textContent = originalButtonText;
-            });
-        });
-    }
+    const form = e.target;
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправка...';
+    
+    fetch('https://madeinkhakassia.ru/sendmail.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Сообщение успешно отправлено!');
+            form.reset();
+        } else {
+            alert('Ошибка: ' + data.message);
+        }
+    })
+    .catch(error => {
+        alert('Произошла ошибка при отправке формы');
+        console.error('Error:', error);
+    })
+    .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+    });
 });
                     // Show success message
                     formWrapper.style.display = 'none';
