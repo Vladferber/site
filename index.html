@@ -2304,418 +2304,356 @@
     });
     
      // Form functionality
-  // Form functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('application-form');
-        const steps = document.querySelectorAll('.form-step');
-        const progressSteps = document.querySelectorAll('.progress-steps .step');
-        const progressFill = document.querySelector('.progress-fill');
-        const nextButtons = document.querySelectorAll('.btn-next');
-        const prevButtons = document.querySelectorAll('.btn-prev');
-        const submitButton = document.querySelector('.btn-submit');
-        const formWrapper = document.querySelector('.form-wrapper');
-        const formSuccess = document.querySelector('.form-success');
-        const newApplicationBtn = document.getElementById('new-application');
-        
-        let currentStep = 1;
-        
-        // Initialize form
-        showStep(currentStep);
-        updateProgress();
-        
-        // Next button click
-        nextButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const nextStep = parseInt(this.getAttribute('data-next'));
-                
-                // Validate current step before proceeding
-                if (validateStep(currentStep)) {
-                    currentStep = nextStep;
-                    showStep(currentStep);
-                    updateProgress();
-                    scrollToTop();
-                }
-            });
-        });
-        
-        // Previous button click
-        prevButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const prevStep = parseInt(this.getAttribute('data-prev'));
-                currentStep = prevStep;
-                showStep(currentStep);
-                updateProgress();
-                scrollToTop();
-            });
-        });
-        
-        // Submit form
-         document.getElementById('application-form-section').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const submitBtn = document.getElementById('submit-btn');
-            const statusMessage = document.getElementById('status-message');
-            const formData = new FormData(this);
-            
-            // Отключаем кнопку во время отправки
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Отправляется...';
-            statusMessage.innerHTML = '';
-            
-            fetch('sendmail.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    statusMessage.innerHTML = '<div class="status-message success-message">' + data.message + '</div>';
-                    document.getElementById('contact-form').reset();
-                    
-                    // Прокручиваем к сообщению об успехе
-                    statusMessage.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    statusMessage.innerHTML = '<div class="status-message error-message">' + data.message + '</div>';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                statusMessage.innerHTML = '<div class="status-message error-message">Произошла ошибка при отправке. Попробуйте еще раз.</div>';
-            })
-            .finally(() => {
-                // Включаем кнопку обратно
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Отправить сообщение';
-            });
-        });
-
-                    // Show success message
-                    formWrapper.style.display = 'none';
-                    formSuccess.style.display = 'block';
-                    
-                    // Scroll to success message
-                    formSuccess.scrollIntoView({ behavior: 'smooth' });
-                }, 1000);
-            }
-        });
-
-        
-        // New application button
-        newApplicationBtn.addEventListener('click', function() {
-            form.reset();
-            currentStep = 1;
-            showStep(currentStep);
-            updateProgress();
-            formWrapper.style.display = 'block';
-            formSuccess.style.display = 'none';
-            
-            // Reset file previews
-            document.querySelectorAll('.file-preview').forEach(preview => {
-                preview.innerHTML = '';
-            });
-            
-            // Scroll to form
-            form.scrollIntoView({ behavior: 'smooth' });
-        });
-        
-        // Show current step
-        function showStep(step) {
-            steps.forEach(s => {
-                if (parseInt(s.getAttribute('data-step')) === step) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-            
-            progressSteps.forEach(s => {
-                if (parseInt(s.getAttribute('data-step')) <= step) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-        }
-        
-        // Update progress bar
-        function updateProgress() {
-            const progress = (currentStep / steps.length) * 100;
-            progressFill.style.width = `${progress}%`;
-        }
-        
-        // Validate current step
-        function validateStep(step) {
-            let isValid = true;
-            const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
-            
-            // Check required fields
-            const requiredFields = currentStepElement.querySelectorAll('[required]');
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    field.classList.add('error');
-                    isValid = false;
-                    
-                    // Add error message
-                    if (!field.nextElementSibling.classList.contains('error-message')) {
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Это поле обязательно для заполнения';
-                        errorMsg.style.color = 'var(--secondary)';
-                        errorMsg.style.fontSize = '0.8rem';
-                        errorMsg.style.marginTop = '0.25rem';
-                        field.parentNode.insertBefore(errorMsg, field.nextSibling);
-                    }
-                } else {
-                    field.classList.remove('error');
-                    
-                    // Remove error message if exists
-                    if (field.nextElementSibling.classList.contains('error-message')) {
-                        field.nextElementSibling.remove();
-                    }
-                }
-            });
-            
-            // Specific validation for step 3 (file upload)
-            if (step === 3) {
-                const fileInput = document.getElementById('registration-docs');
-                if (fileInput.files.length === 0) {
-                    fileInput.classList.add('error');
-                    isValid = false;
-                    
-                    const uploadArea = fileInput.nextElementSibling;
-                    uploadArea.style.borderColor = 'var(--secondary)';
-                    
-                    if (!uploadArea.nextElementSibling.classList.contains('error-message')) {
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Необходимо загрузить хотя бы один файл';
-                        errorMsg.style.color = 'var(--secondary)';
-                        errorMsg.style.fontSize = '0.8rem';
-                        errorMsg.style.marginTop = '0.25rem';
-                        uploadArea.parentNode.insertBefore(errorMsg, uploadArea.nextSibling);
-                    }
-                } else {
-                    fileInput.classList.remove('error');
-                    const uploadArea = fileInput.nextElementSibling;
-                    uploadArea.style.borderColor = '#e5e7eb';
-                    
-                    if (uploadArea.nextElementSibling.classList.contains('error-message')) {
-                        uploadArea.nextElementSibling.remove();
-                    }
-                }
-                
-                // Check agreement checkbox
-                const agreeCheckbox = document.getElementById('agree-terms');
-                if (!agreeCheckbox.checked) {
-                    agreeCheckbox.classList.add('error');
-                    isValid = false;
-                    
-                    if (!agreeCheckbox.nextElementSibling.classList.contains('error-message')) {
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'error-message';
-                        errorMsg.textContent = 'Необходимо принять условия';
-                        errorMsg.style.color = 'var(--secondary)';
-                        errorMsg.style.fontSize = '0.8rem';
-                        errorMsg.style.marginTop = '0.25rem';
-                        agreeCheckbox.parentNode.insertBefore(errorMsg, agreeCheckbox.nextSibling);
-                    }
-                } else {
-                    agreeCheckbox.classList.remove('error');
-                    
-                    if (agreeCheckbox.nextElementSibling.classList.contains('error-message')) {
-                        agreeCheckbox.nextElementSibling.remove();
-                    }
-                }
-            }
-            
-            return isValid;
-        }
-        
-        // Scroll to top of form
-        function scrollToTop() {
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        // Textarea character counter
-        const textarea = document.getElementById('product-description');
-        if (textarea) {
-            const counter = textarea.nextElementSibling.querySelector('span');
-            
-            textarea.addEventListener('input', function() {
-                counter.textContent = this.value.length;
-                
-                if (this.value.length > 500) {
-                    this.value = this.value.substring(0, 500);
-                    counter.textContent = 500;
-                }
-            });
-        }
-        
-        // Range slider value display
-        const rangeSlider = document.getElementById('production-percent');
-        if (rangeSlider) {
-            const percentValue = document.getElementById('percent-value');
-            
-            rangeSlider.addEventListener('input', function() {
-                percentValue.textContent = this.value;
-            });
-        }
-        
-        // File upload preview
-        document.querySelectorAll('input[type="file"]').forEach(input => {
-            input.addEventListener('change', function() {
-                const preview = this.parentNode.querySelector('.file-preview');
-                preview.innerHTML = '';
-                
-                if (this.files.length > 0) {
-                    for (let i = 0; i < this.files.length; i++) {
-                        const file = this.files[i];
-                        const fileItem = document.createElement('div');
-                        fileItem.className = 'file-item';
-                        
-                        const fileIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                        fileIcon.setAttribute('width', '16');
-                        fileIcon.setAttribute('height', '16');
-                        fileIcon.setAttribute('viewBox', '0 0 24 24');
-                        fileIcon.setAttribute('fill', 'none');
-                        fileIcon.setAttribute('stroke', 'currentColor');
-                        fileIcon.setAttribute('stroke-width', '2');
-                        fileIcon.setAttribute('stroke-linecap', 'round');
-                        fileIcon.setAttribute('stroke-linejoin', 'round');
-                        
-                        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                        path.setAttribute('d', 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z');
-                        fileIcon.appendChild(path);
-                        
-                        const fileName = document.createElement('span');
-                        fileName.textContent = file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name;
-                        
-                        const removeBtn = document.createElement('button');
-                        removeBtn.innerHTML = '&times;';
-                        removeBtn.title = 'Удалить';
-                        removeBtn.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            fileItem.remove();
-                            
-                            // Create new DataTransfer to remove file from input
-                            const dt = new DataTransfer();
-                            for (let j = 0; j < input.files.length; j++) {
-                                if (j !== i) {
-                                    dt.items.add(input.files[j]);
-                                }
-                            }
-                            input.files = dt.files;
-                        });
-                        
-                        fileItem.appendChild(fileIcon);
-                        fileItem.appendChild(fileName);
-                        fileItem.appendChild(removeBtn);
-                        preview.appendChild(fileItem);
-                    }
-                }
-            });
-        });
-        
-        // Drag and drop for file upload
-        document.querySelectorAll('.upload-area').forEach(area => {
-            area.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                area.style.borderColor = 'var(--primary)';
-                area.style.backgroundColor = 'rgba(44, 95, 139, 0.05)';
-            });
-            
-            area.addEventListener('dragleave', () => {
-                area.style.borderColor = '#e5e7eb';
-                area.style.backgroundColor = '#f9fafb';
-            });
-            
-            area.addEventListener('drop', (e) => {
-                e.preventDefault();
-                area.style.borderColor = '#e5e7eb';
-                area.style.backgroundColor = '#f9fafb';
-                
-                const input = area.previousElementSibling;
-                input.files = e.dataTransfer.files;
-                input.dispatchEvent(new Event('change'));
-            });
-        });
-    });
-// Добавьте этот код в конец вашего существующего script тега в index.html
-
-// Функция отправки формы заявки
-function setupApplicationFormSubmit() {
+  // Исправленный код для формы заявки
+document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("application-form")
-  if (!form) return
+  const steps = document.querySelectorAll(".form-step")
+  const progressSteps = document.querySelectorAll(".progress-steps .step")
+  const progressFill = document.querySelector(".progress-fill")
+  const nextButtons = document.querySelectorAll(".btn-next")
+  const prevButtons = document.querySelectorAll(".btn-prev")
+  const submitButton = document.querySelector(".btn-submit")
+  const formWrapper = document.querySelector(".form-wrapper")
+  const formSuccess = document.querySelector(".form-success")
+  const newApplicationBtn = document.getElementById("new-application")
 
-  // Переопределяем существующий обработчик submit
-  form.addEventListener("submit", (event) => {
-    event.preventDefault()
-    event.stopPropagation()
+  let currentStep = 1
 
-    // Проверяем, что все шаги пройдены
-    if (typeof currentStep === "undefined" || currentStep !== 3) {
-      alert("Пожалуйста, заполните все шаги формы")
-      return
-    }
+  // Initialize form
+  showStep(currentStep)
+  updateProgress()
 
-    // Проверяем валидацию последнего шага
-    if (typeof validateStep === "undefined" || !validateStep(3)) {
-      return
-    }
+  // Next button click
+  nextButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const nextStep = Number.parseInt(this.getAttribute("data-next"))
 
-    const submitButton = document.querySelector(".btn-submit")
-    const originalText = submitButton.textContent
-
-    // Отключаем кнопку и показываем процесс отправки
-    submitButton.disabled = true
-    submitButton.textContent = "Отправляется..."
-
-    // Собираем данные формы
-    const formData = new FormData(form)
-
-    // Отправляем данные
-    fetch("sendmail.php", {
-      method: "POST",
-      body: formData,
+      // Validate current step before proceeding
+      if (validateStep(currentStep)) {
+        currentStep = nextStep
+        showStep(currentStep)
+        updateProgress()
+        scrollToTop()
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          // Обновляем номер заявки в сообщении об успехе
-          if (data.application_number) {
-            document.getElementById("application-number").textContent = data.application_number
+  })
+
+  // Previous button click
+  prevButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const prevStep = Number.parseInt(this.getAttribute("data-prev"))
+      currentStep = prevStep
+      showStep(currentStep)
+      updateProgress()
+      scrollToTop()
+    })
+  })
+
+  // Submit form
+  if (form) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault()
+
+      // Validate final step
+      if (!validateStep(3)) {
+        return
+      }
+
+      const submitBtn = document.querySelector(".btn-submit")
+      const originalText = submitBtn.textContent
+
+      // Disable button during submission
+      submitBtn.disabled = true
+      submitBtn.textContent = "Отправляется..."
+
+      // Collect form data
+      const formData = new FormData(form)
+
+      // Simulate form submission (replace with actual AJAX call to sendmail.php)
+      setTimeout(() => {
+        // Generate random application number
+        const appNumber = Math.floor(10000 + Math.random() * 90000)
+        document.getElementById("application-number").textContent = appNumber
+
+        // Show success message
+        formWrapper.style.display = "none"
+        formSuccess.style.display = "block"
+
+        // Scroll to success message
+        formSuccess.scrollIntoView({ behavior: "smooth" })
+
+        // Reset button
+        submitBtn.disabled = false
+        submitBtn.textContent = originalText
+      }, 1000)
+    })
+  }
+
+  // New application button
+  if (newApplicationBtn) {
+    newApplicationBtn.addEventListener("click", () => {
+      form.reset()
+      currentStep = 1
+      showStep(currentStep)
+      updateProgress()
+      formWrapper.style.display = "block"
+      formSuccess.style.display = "none"
+
+      // Reset file previews
+      document.querySelectorAll(".file-preview").forEach((preview) => {
+        preview.innerHTML = ""
+      })
+
+      // Scroll to form
+      form.scrollIntoView({ behavior: "smooth" })
+    })
+  }
+
+  // Show current step
+  function showStep(step) {
+    steps.forEach((s) => {
+      if (Number.parseInt(s.getAttribute("data-step")) === step) {
+        s.classList.add("active")
+      } else {
+        s.classList.remove("active")
+      }
+    })
+
+    progressSteps.forEach((s) => {
+      if (Number.parseInt(s.getAttribute("data-step")) <= step) {
+        s.classList.add("active")
+      } else {
+        s.classList.remove("active")
+      }
+    })
+  }
+
+  // Update progress bar
+  function updateProgress() {
+    const progress = (currentStep / steps.length) * 100
+    progressFill.style.width = `${progress}%`
+  }
+
+  // Validate current step
+  function validateStep(step) {
+    let isValid = true
+    const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`)
+
+    // Check required fields
+    const requiredFields = currentStepElement.querySelectorAll("[required]")
+    requiredFields.forEach((field) => {
+      if (!field.value.trim()) {
+        field.classList.add("error")
+        isValid = false
+
+        // Add error message if it doesn't exist
+        const nextElement = field.nextElementSibling
+        if (!nextElement || !nextElement.classList.contains("error-message")) {
+          const errorMsg = document.createElement("div")
+          errorMsg.className = "error-message"
+          errorMsg.textContent = "Это поле обязательно для заполнения"
+          errorMsg.style.color = "var(--secondary)"
+          errorMsg.style.fontSize = "0.8rem"
+          errorMsg.style.marginTop = "0.25rem"
+          field.parentNode.insertBefore(errorMsg, field.nextSibling)
+        }
+      } else {
+        field.classList.remove("error")
+
+        // Remove error message if exists
+        const nextElement = field.nextElementSibling
+        if (nextElement && nextElement.classList.contains("error-message")) {
+          nextElement.remove()
+        }
+      }
+    })
+
+    // Specific validation for step 3 (file upload)
+    if (step === 3) {
+      const fileInput = document.getElementById("registration-docs")
+      if (fileInput && fileInput.files.length === 0) {
+        fileInput.classList.add("error")
+        isValid = false
+
+        const uploadArea = fileInput.nextElementSibling
+        if (uploadArea) {
+          uploadArea.style.borderColor = "var(--secondary)"
+
+          const nextElement = uploadArea.nextElementSibling
+          if (!nextElement || !nextElement.classList.contains("error-message")) {
+            const errorMsg = document.createElement("div")
+            errorMsg.className = "error-message"
+            errorMsg.textContent = "Необходимо загрузить хотя бы один файл"
+            errorMsg.style.color = "var(--secondary)"
+            errorMsg.style.fontSize = "0.8rem"
+            errorMsg.style.marginTop = "0.25rem"
+            uploadArea.parentNode.insertBefore(errorMsg, uploadArea.nextSibling)
           }
+        }
+      } else if (fileInput) {
+        fileInput.classList.remove("error")
+        const uploadArea = fileInput.nextElementSibling
+        if (uploadArea) {
+          uploadArea.style.borderColor = "#e5e7eb"
 
-          // Показываем сообщение об успехе (используем существующую логику)
-          document.querySelector(".form-wrapper").style.display = "none"
-          document.querySelector(".form-success").style.display = "block"
+          const nextElement = uploadArea.nextElementSibling
+          if (nextElement && nextElement.classList.contains("error-message")) {
+            nextElement.remove()
+          }
+        }
+      }
 
-          // Прокручиваем к сообщению об успехе
-          document.querySelector(".form-success").scrollIntoView({ behavior: "smooth" })
-        } else {
-          alert("Ошибка при отправке заявки: " + data.message)
+      // Check agreement checkbox
+      const agreeCheckbox = document.getElementById("agree-terms")
+      if (agreeCheckbox && !agreeCheckbox.checked) {
+        agreeCheckbox.classList.add("error")
+        isValid = false
+
+        const label = agreeCheckbox.nextElementSibling
+        if (label) {
+          const nextElement = label.nextElementSibling
+          if (!nextElement || !nextElement.classList.contains("error-message")) {
+            const errorMsg = document.createElement("div")
+            errorMsg.className = "error-message"
+            errorMsg.textContent = "Необходимо принять условия"
+            errorMsg.style.color = "var(--secondary)"
+            errorMsg.style.fontSize = "0.8rem"
+            errorMsg.style.marginTop = "0.25rem"
+            label.parentNode.insertBefore(errorMsg, label.nextSibling)
+          }
+        }
+      } else if (agreeCheckbox) {
+        agreeCheckbox.classList.remove("error")
+
+        const label = agreeCheckbox.nextElementSibling
+        if (label) {
+          const nextElement = label.nextElementSibling
+          if (nextElement && nextElement.classList.contains("error-message")) {
+            nextElement.remove()
+          }
+        }
+      }
+    }
+
+    return isValid
+  }
+
+  // Scroll to top of form
+  function scrollToTop() {
+    form.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
+  // Textarea character counter
+  const textarea = document.getElementById("product-description")
+  if (textarea) {
+    const counter = textarea.nextElementSibling.querySelector("span")
+    if (counter) {
+      textarea.addEventListener("input", function () {
+        counter.textContent = this.value.length
+
+        if (this.value.length > 500) {
+          this.value = this.value.substring(0, 500)
+          counter.textContent = 500
         }
       })
-      .catch((error) => {
-        console.error("Ошибка отправки:", error)
-        alert("Произошла ошибка при отправке заявки. Попробуйте еще раз.")
+    }
+  }
+
+  // Range slider value display
+  const rangeSlider = document.getElementById("production-percent")
+  if (rangeSlider) {
+    const percentValue = document.getElementById("percent-value")
+    if (percentValue) {
+      rangeSlider.addEventListener("input", function () {
+        percentValue.textContent = this.value
       })
-      .finally(() => {
-        // Включаем кнопку обратно
-        submitButton.disabled = false
-        submitButton.textContent = originalText
-      })
+    }
+  }
+
+  // File upload preview
+  document.querySelectorAll('input[type="file"]').forEach((input) => {
+    input.addEventListener("change", function () {
+      const preview = this.parentNode.querySelector(".file-preview")
+      if (!preview) return
+
+      preview.innerHTML = ""
+
+      if (this.files.length > 0) {
+        for (let i = 0; i < this.files.length; i++) {
+          const file = this.files[i]
+          const fileItem = document.createElement("div")
+          fileItem.className = "file-item"
+
+          const fileIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+          fileIcon.setAttribute("width", "16")
+          fileIcon.setAttribute("height", "16")
+          fileIcon.setAttribute("viewBox", "0 0 24 24")
+          fileIcon.setAttribute("fill", "none")
+          fileIcon.setAttribute("stroke", "currentColor")
+          fileIcon.setAttribute("stroke-width", "2")
+          fileIcon.setAttribute("stroke-linecap", "round")
+          fileIcon.setAttribute("stroke-linejoin", "round")
+
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path")
+          path.setAttribute("d", "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z")
+          fileIcon.appendChild(path)
+
+          const fileName = document.createElement("span")
+          fileName.textContent = file.name.length > 15 ? file.name.substring(0, 15) + "..." : file.name
+
+          const removeBtn = document.createElement("button")
+          removeBtn.innerHTML = "&times;"
+          removeBtn.title = "Удалить"
+          removeBtn.addEventListener("click", (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            fileItem.remove()
+
+            // Create new DataTransfer to remove file from input
+            const dt = new DataTransfer()
+            for (let j = 0; j < input.files.length; j++) {
+              if (j !== i) {
+                dt.items.add(input.files[j])
+              }
+            }
+            input.files = dt.files
+          })
+
+          fileItem.appendChild(fileIcon)
+          fileItem.appendChild(fileName)
+          fileItem.appendChild(removeBtn)
+          preview.appendChild(fileItem)
+        }
+      }
+    })
   })
-}
 
-// Инициализируем отправку формы после загрузки DOM
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", setupApplicationFormSubmit)
-} else {
-  setupApplicationFormSubmit()
-}
+  // Drag and drop for file upload
+  document.querySelectorAll(".upload-area").forEach((area) => {
+    area.addEventListener("dragover", (e) => {
+      e.preventDefault()
+      area.style.borderColor = "var(--primary)"
+      area.style.backgroundColor = "rgba(44, 95, 139, 0.05)"
+    })
 
+    area.addEventListener("dragleave", () => {
+      area.style.borderColor = "#e5e7eb"
+      area.style.backgroundColor = "#f9fafb"
+    })
+
+    area.addEventListener("drop", (e) => {
+      e.preventDefault()
+      area.style.borderColor = "#e5e7eb"
+      area.style.backgroundColor = "#f9fafb"
+
+      const input = area.previousElementSibling
+      if (input) {
+        input.files = e.dataTransfer.files
+        input.dispatchEvent(new Event("change"))
+      }
+    })
+  })
+})
 </script>
 </body>
 </html>
