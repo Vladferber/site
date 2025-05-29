@@ -2350,45 +2350,48 @@
         });
         
         // Submit form
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+         document.getElementById('application-form').addEventListener('submit', function(event) {
+            event.preventDefault();
             
-            if (validateStep(currentStep)) {
-                // Simulate form submission
-                setTimeout(() => {
-                  document.getElementById('application-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const form = e.target;
-    const formData = new FormData(form);
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.textContent;
-    
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Отправка...';
-    
-    fetch('https://madeinkhakassia.ru/sendmail.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Сообщение успешно отправлено!');
-            form.reset();
-        } else {
-            alert('Ошибка: ' + data.message);
-        }
-    })
-    .catch(error => {
-        alert('Произошла ошибка при отправке формы');
-        console.error('Error:', error);
-    })
-    .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalBtnText;
-    });
-});
+            const submitBtn = document.getElementById('submit-btn');
+            const statusMessage = document.getElementById('status-message');
+            const formData = new FormData(this);
+            
+            // Отключаем кнопку во время отправки
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Отправляется...';
+            statusMessage.innerHTML = '';
+            
+            fetch('sendmail.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    statusMessage.innerHTML = '<div class="status-message success-message">' + data.message + '</div>';
+                    document.getElementById('contact-form').reset();
+                    
+                    // Прокручиваем к сообщению об успехе
+                    statusMessage.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    statusMessage.innerHTML = '<div class="status-message error-message">' + data.message + '</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                statusMessage.innerHTML = '<div class="status-message error-message">Произошла ошибка при отправке. Попробуйте еще раз.</div>';
+            })
+            .finally(() => {
+                // Включаем кнопку обратно
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Отправить сообщение';
+            });
+        });
+    </script>
+</body>
+</html>
+
                     // Show success message
                     formWrapper.style.display = 'none';
                     formSuccess.style.display = 'block';
