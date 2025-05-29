@@ -2641,6 +2641,80 @@
             });
         });
     });
+// Добавьте этот код в конец вашего существующего script тега в index.html
+
+// Функция отправки формы заявки
+function setupApplicationFormSubmit() {
+  const form = document.getElementById("application-form")
+  if (!form) return
+
+  // Переопределяем существующий обработчик submit
+  form.addEventListener("submit", (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    // Проверяем, что все шаги пройдены
+    if (typeof currentStep === "undefined" || currentStep !== 3) {
+      alert("Пожалуйста, заполните все шаги формы")
+      return
+    }
+
+    // Проверяем валидацию последнего шага
+    if (typeof validateStep === "undefined" || !validateStep(3)) {
+      return
+    }
+
+    const submitButton = document.querySelector(".btn-submit")
+    const originalText = submitButton.textContent
+
+    // Отключаем кнопку и показываем процесс отправки
+    submitButton.disabled = true
+    submitButton.textContent = "Отправляется..."
+
+    // Собираем данные формы
+    const formData = new FormData(form)
+
+    // Отправляем данные
+    fetch("sendmail.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // Обновляем номер заявки в сообщении об успехе
+          if (data.application_number) {
+            document.getElementById("application-number").textContent = data.application_number
+          }
+
+          // Показываем сообщение об успехе (используем существующую логику)
+          document.querySelector(".form-wrapper").style.display = "none"
+          document.querySelector(".form-success").style.display = "block"
+
+          // Прокручиваем к сообщению об успехе
+          document.querySelector(".form-success").scrollIntoView({ behavior: "smooth" })
+        } else {
+          alert("Ошибка при отправке заявки: " + data.message)
+        }
+      })
+      .catch((error) => {
+        console.error("Ошибка отправки:", error)
+        alert("Произошла ошибка при отправке заявки. Попробуйте еще раз.")
+      })
+      .finally(() => {
+        // Включаем кнопку обратно
+        submitButton.disabled = false
+        submitButton.textContent = originalText
+      })
+  })
+}
+
+// Инициализируем отправку формы после загрузки DOM
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", setupApplicationFormSubmit)
+} else {
+  setupApplicationFormSubmit()
+}
 
 </script>
 </body>
